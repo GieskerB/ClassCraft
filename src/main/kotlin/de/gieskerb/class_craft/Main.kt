@@ -10,13 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin
 class Main : JavaPlugin() {
     // TODO in general: more and colored text!
 
-    companion object {
-        private lateinit var plugin: JavaPlugin
 
-        @JvmStatic
-        fun getPlugin(): JavaPlugin {
-            return plugin;
-        }
+    companion object {
+        lateinit var plugin: JavaPlugin
+            private set
     }
 
     init {
