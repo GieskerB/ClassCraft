@@ -15,7 +15,7 @@ class HungerChangeListener : Listener {
 
         if (playerData!!.activeClass != null && playerData.activeClass is FarmerClass) {
             val farmerClass = playerData.activeClass as FarmerClass
-            if ( farmerClass.getLevel() >= 15) {
+            if ( farmerClass.level >= 15) {
                 val newFoodLevel = e.foodLevel
                 if (newFoodLevel < getLastHunger(player.name)) {
                     e.foodLevel -= 1

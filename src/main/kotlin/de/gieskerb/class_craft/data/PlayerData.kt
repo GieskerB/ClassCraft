@@ -34,7 +34,7 @@ class PlayerData {
     }
 
     fun toJSON(): JSONObject {
-        val json: JSONObject = JSONObject()
+        val json = JSONObject()
         json["player"] = assignedPlayer
         if (this.activeClass != null) {
             json["class"] = activeClass!!.toJSON()

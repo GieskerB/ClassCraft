@@ -20,7 +20,7 @@ class PlayerMoveListener : Listener {
                 event.from.x.toInt().toString() + " " + event.from.y.toInt() + " -> " + event.to!!
                     .z.toInt() + " " + event.to!!.z.toInt()
             )
-            playerClass.addXp(1U)
+            playerClass.addXp(1)
         }
     }
 }

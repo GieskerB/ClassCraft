@@ -25,6 +25,11 @@ class Main : JavaPlugin() {
         getCommand("class")?.setExecutor(ClassCommand())
         getCommand("horse")?.setExecutor(HorseCommand())
 
+        Bukkit.broadcastMessage("Hey there")
+        println("HI THERE")
+
+        PlayerJoinListener.loadAllPlayersData()
+
         val pluginManager: PluginManager = Bukkit.getPluginManager()
         pluginManager.registerEvents(BlockBreakListener(), this)
         pluginManager.registerEvents(BlockPlaceListener(), this)
@@ -40,7 +45,6 @@ class Main : JavaPlugin() {
         pluginManager.registerEvents(RespawnListener(), this)
         pluginManager.registerEvents(WorldSaveListener(), this)
 
-        PlayerJoinListener.loadAllPlayersData()
     }
 
     override fun onDisable() {

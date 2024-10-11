@@ -65,7 +65,7 @@ class PlayerJoinListener : Listener {
 
             var playerData: PlayerData
             if (playerFile.exists()) {
-                val parser: JSONParser = JSONParser()
+                val parser = JSONParser()
                 try {
                     val json: JSONObject = parser.parse(FileReader(playerFile)) as JSONObject
                     playerData = PlayerData(json)

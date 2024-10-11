@@ -7,20 +7,26 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
-import kotlin.time.times
 
 abstract class BaseClass {
     val CLASS_NAME: String
+    abstract val classItem: ItemStack?
+    protected abstract val horseData: HorseData?
     private val itemReceived: BooleanArray
     protected val playerReference: Player
-    var level: Byte
-        private set
-    var xp: UInt
-        private set
+    var level: Byte = 0
+        set(value) {
+            for (i in 0 until value) {
+                field = i.toByte()
+                this.checkNonItemReward()
+                this.checkItemReward()
+            }
+        }
+    private var xp: Int
 
     internal constructor(name: String, player: Player) {
         this.level = 0
-        this.xp = 0U
+        this.xp = 0
         this.CLASS_NAME = name
         this.playerReference = player
         this.itemReceived = BooleanArray(4)
@@ -29,7 +35,7 @@ abstract class BaseClass {
     internal constructor(json: JSONObject, player: Player) {
         this.CLASS_NAME = json["class"].toString()
         this.level = json["level"].toString().toByte()
-        this.xp = json["xp"].toString().toUInt()
+        this.xp = json["xp"].toString().toInt()
         val jsonArray: JSONArray = json.get("rewardsClaimed") as JSONArray
         this.itemReceived = BooleanArray(jsonArray.size)
         for (i in 0 until jsonArray.size) {
@@ -48,12 +54,7 @@ abstract class BaseClass {
 
     // TODO Milk
     abstract fun reapplyRewardEffects()
-
     abstract fun removePermanentEffects()
-
-    abstract val classItem: ItemStack?
-
-    protected abstract val horseData: HorseData?
 
     protected abstract fun giveBannerReward()
     protected abstract fun giveFirstToolReward()
@@ -66,7 +67,7 @@ abstract class BaseClass {
             this.reapplyRewardEffects()
         } else if (level.toInt() == 7) {
             // Give horse access:
-            PlayerData.getPlayerData(playerReference.name)?.horseData = horseData ;
+            PlayerData.getPlayerData(playerReference.name)?.horseData = horseData
             playerReference.sendMessage(
                 "You have now unlocked your class specific horse! Use /horse for more details."
             )
@@ -74,7 +75,7 @@ abstract class BaseClass {
             //Special ability
         } else {
             // Give Exp
-            playerReference.giveExp(this.level * 25)
+            this.playerReference?.giveExp(this.level * 25)
         }
     }
 
@@ -85,8 +86,7 @@ abstract class BaseClass {
             itemReceived[0] = true
         } else if (this.level >= 1 && !itemReceived[0]) {
             playerReference.sendMessage(
-                "You have an open reward from reaching level 1." +
-                        " Please make room in your inventory to receive it!"
+                "You have an open reward from reaching level 1." + " Please make room in your inventory to receive it!"
             )
         }
 
@@ -95,8 +95,7 @@ abstract class BaseClass {
             itemReceived[1] = true
         } else if (this.level >= 3 && !itemReceived[1]) {
             playerReference.sendMessage(
-                "You have an open reward from reaching level 3." +
-                        " Please make room in your inventory to receive it!"
+                "You have an open reward from reaching level 3." + " Please make room in your inventory to receive it!"
             )
         }
 
@@ -105,8 +104,7 @@ abstract class BaseClass {
             itemReceived[2] = true
         } else if (this.level >= 13 && !itemReceived[2]) {
             playerReference.sendMessage(
-                "You have an open reward from reaching level 15." +
-                        " Please make room in your inventory to receive it!"
+                "You have an open reward from reaching level 15." + " Please make room in your inventory to receive it!"
             )
         }
 
@@ -115,25 +113,12 @@ abstract class BaseClass {
             itemReceived[3] = true
         } else if (this.level >= 20 && !itemReceived[3]) {
             playerReference.sendMessage(
-                "You have an open reward from reaching level 20." +
-                        " Please make room in your inventory to receive it!"
+                "You have an open reward from reaching level 20." + " Please make room in your inventory to receive it!"
             )
         }
     }
 
-    fun getLevel(): Int {
-        return level.toInt()
-    }
-
-    fun setLevel(level: Int) {
-        for (i in 0 until level) {
-            this.level = i.toByte()
-            this.checkNonItemReward()
-            this.checkItemReward()
-        }
-    }
-
-    fun addXp(xp: UInt) {
+    fun addXp(xp: Int) {
         this.xp += xp
         this.checkLevelUp()
         this.checkItemReward()
@@ -155,10 +140,10 @@ abstract class BaseClass {
     companion object {
         private const val MAX_LEVEL: Byte = 20
 
-        private fun getNetLevelStep(level: Int): UInt {
+        private fun getNetLevelStep(level: Int): Int {
             val MAX_LEVEL_XP = 1000
             val FACTOR = (level + 1) * (level + 1) / 400.0
-            return (FACTOR * MAX_LEVEL_XP).toUInt()
+            return (FACTOR * MAX_LEVEL_XP).toInt()
         }
 
         fun fromJSON(json: JSONObject, player: Player): BaseClass? {

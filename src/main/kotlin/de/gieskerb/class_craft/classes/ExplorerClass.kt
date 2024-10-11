@@ -63,15 +63,20 @@ class ExplorerClass : BaseClass {
 
     override fun giveBannerReward() {
         val item = ItemStack(Material.GRAY_BANNER)
-        val m = item.itemMeta as BannerMeta?
+        val m = item.itemMeta as BannerMeta
 
-        val patterns: MutableList<Pattern> = ArrayList()
-        patterns.add(Pattern(DyeColor.RED, PatternType.FLOWER))
-        patterns.add(Pattern(DyeColor.RED, PatternType.STRIPE_TOP))
-        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM))
-        patterns.add(Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE))
+        val patterns: MutableList<Pattern> = java.util.ArrayList()
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.HALF_HORIZONTAL))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.HALF_HORIZONTAL_BOTTOM))
+        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_LEFT))
+        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_RIGHT))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.STRIPE_CENTER))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.BORDER))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.HALF_HORIZONTAL_BOTTOM))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.CURLY_BORDER))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.STRIPE_TOP))
 
-        m!!.patterns = patterns
+        m.patterns = patterns
 
         item.setItemMeta(m)
         super.playerReference.inventory.addItem(item)

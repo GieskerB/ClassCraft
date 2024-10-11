@@ -81,7 +81,7 @@ class ClassCommand : CommandExecutor {
                             }
                             val activeClass: BaseClass? = PlayerData.getPlayerData(sender.getName())?.activeClass
                             if (activeClass != null) {
-                                activeClass.setLevel(level)
+                                activeClass.level = level.toByte()
                             } else {
                                 sender.sendMessage("You dont have a class selected right now.")
                             }
@@ -138,7 +138,7 @@ class ClassCommand : CommandExecutor {
             }
 
             val playerData = checkNotNull(PlayerData.getPlayerData(player.name))
-            val playerLevel = if (playerData.activeClass == null) 0 else playerData.activeClass!!.getLevel()
+            val playerLevel = if (playerData.activeClass == null) 0 else playerData.activeClass!!.level
 
             var levelPaneIndex = 1
 

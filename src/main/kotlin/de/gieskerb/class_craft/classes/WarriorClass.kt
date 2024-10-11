@@ -21,12 +21,12 @@ class WarriorClass : BaseClass {
     constructor(json: JSONObject, player: Player) : super(json, player)
 
     override fun reapplyRewardEffects() {
-        if (super.getLevel() >= 17) {
+        if (super.level >= 17) {
             super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, -1, 1, false, false))
-        } else if (super.getLevel() >= 5) {
+        } else if (super.level >= 5) {
             super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, -1, 0, false, false))
         }
-        if (super.getLevel() >= 15) {
+        if (super.level >= 15) {
             super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.SLOWNESS, -1, 0, false, false))
         }
     }
@@ -54,15 +54,22 @@ class WarriorClass : BaseClass {
 
     override fun giveBannerReward() {
         val item = ItemStack(Material.GRAY_BANNER)
-        val m = item.itemMeta as BannerMeta?
+        val m = item.itemMeta as BannerMeta
 
         val patterns: MutableList<Pattern> = ArrayList()
-        patterns.add(Pattern(DyeColor.RED, PatternType.FLOWER))
-        patterns.add(Pattern(DyeColor.RED, PatternType.STRIPE_TOP))
-        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM))
-        patterns.add(Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE))
+        patterns.add(Pattern(DyeColor.LIGHT_GRAY, PatternType.FLOWER))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.HALF_HORIZONTAL_BOTTOM))
+        patterns.add(Pattern(DyeColor.BLACK, PatternType.STRIPE_CENTER))
+        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_CENTER))
+        patterns.add(Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLE_TOP))
+        patterns.add(Pattern(DyeColor.ORANGE, PatternType.STRIPE_TOP))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.SQUARE_TOP_LEFT))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.SQUARE_TOP_RIGHT))
+        patterns.add(Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLES_TOP))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.CURLY_BORDER))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.CURLY_BORDER))
 
-        m!!.patterns = patterns
+        m.patterns = patterns
 
         item.setItemMeta(m)
         super.playerReference.inventory.addItem(item)

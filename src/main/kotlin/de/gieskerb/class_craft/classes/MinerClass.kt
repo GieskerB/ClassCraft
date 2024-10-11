@@ -23,12 +23,12 @@ class MinerClass : BaseClass {
     constructor(json: JSONObject, player: Player) : super(json, player)
 
     override fun reapplyRewardEffects() {
-        if (super.getLevel() >= 17) {
+        if (super.level >= 17) {
             super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.HASTE, -1, 1, false, false))
-        } else if (super.getLevel() >= 5) {
+        } else if (super.level >= 5) {
             super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.HASTE, -1, 0, false, false))
         }
-        if (super.getLevel() >= 15) {
+        if (super.level >= 15) {
             super.playerReference.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.baseValue =
                 15.0
         }
@@ -78,16 +78,18 @@ class MinerClass : BaseClass {
     }
 
     override fun giveBannerReward() {
-        val item = ItemStack(Material.GRAY_BANNER)
-        val m = item.itemMeta as BannerMeta?
+        val item = ItemStack(Material.WHITE_BANNER)
+        val m = item.itemMeta as BannerMeta
 
         val patterns: MutableList<Pattern> = ArrayList()
-        patterns.add(Pattern(DyeColor.RED, PatternType.FLOWER))
-        patterns.add(Pattern(DyeColor.RED, PatternType.STRIPE_TOP))
-        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM))
-        patterns.add(Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.CROSS))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.STRIPE_BOTTOM))
+        patterns.add(Pattern(DyeColor.BROWN, PatternType.STRAIGHT_CROSS))
+        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.HALF_HORIZONTAL))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.BORDER))
 
-        m!!.patterns = patterns
+        m.patterns = patterns
 
         item.setItemMeta(m)
         super.playerReference.inventory.addItem(item)

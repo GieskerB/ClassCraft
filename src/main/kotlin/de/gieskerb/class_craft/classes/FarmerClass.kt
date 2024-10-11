@@ -63,15 +63,17 @@ class FarmerClass : BaseClass {
 
     override fun giveBannerReward() {
         val item = ItemStack(Material.GRAY_BANNER)
-        val m = item.itemMeta as BannerMeta?
+        val m = item.itemMeta as BannerMeta
 
-        val patterns: MutableList<Pattern> = ArrayList()
-        patterns.add(Pattern(DyeColor.RED, PatternType.FLOWER))
-        patterns.add(Pattern(DyeColor.RED, PatternType.STRIPE_TOP))
-        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM))
-        patterns.add(Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE))
+        val patterns: MutableList<Pattern> = java.util.ArrayList()
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.HALF_HORIZONTAL_BOTTOM))
+        patterns.add(Pattern(DyeColor.WHITE, PatternType.CREEPER))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.TRIANGLE_BOTTOM))
+        patterns.add(Pattern(DyeColor.BROWN, PatternType.STRIPE_DOWNRIGHT))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.HALF_HORIZONTAL))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.DIAGONAL_RIGHT))
 
-        m!!.patterns = patterns
+        m.patterns = patterns
 
         item.setItemMeta(m)
         super.playerReference.inventory.addItem(item)

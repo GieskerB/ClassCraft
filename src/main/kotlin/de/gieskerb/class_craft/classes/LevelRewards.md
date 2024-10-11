@@ -2,7 +2,7 @@
 
 | Level  |   Warrior    |    Miner     |   Lumberjack   |    Farmer    |    Explorer     | CHECK |
 |:------:|:------------:|:------------:|:--------------:|:------------:|:---------------:|------:|
-| **1**  |    Banner    |    Banner    |     Banner     |    Banner    |     Banner      |     - |
+| **1**  |    Banner    |    Banner    |     Banner     |    Banner    |     Banner      |     X |
 | **2**  |     E-xp     |     E-xp     |      E-xp      |     E-xp     |      E-xp       |     X |
 | **3**  |  Bad-Sword   | Bad-Pickaxe  |    Bad-Axe     |   Bad-Hoe    |    Bad-Boots    |     - |
 | **4**  |     E-xp     |     E-xp     |      E-xp      |     E-xp     |      E-xp       |     X |

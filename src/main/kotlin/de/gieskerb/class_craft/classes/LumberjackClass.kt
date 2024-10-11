@@ -21,12 +21,12 @@ class LumberjackClass : BaseClass {
     constructor(json: JSONObject, player: Player) : super(json, player)
 
     override fun reapplyRewardEffects() {
-        if (super.getLevel() >= 17) {
+        if (super.level >= 17) {
             super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 1, false, false))
-        } else if (super.getLevel() >= 5) {
+        } else if (super.level >= 5) {
             super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 0, false, false))
         }
-        if (super.getLevel() >= 15) {
+        if (super.level >= 15) {
             super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.SLOWNESS, -1, 0, false, false))
         }
     }
@@ -51,16 +51,22 @@ class LumberjackClass : BaseClass {
         )
 
     override fun giveBannerReward() {
-        val item = ItemStack(Material.GRAY_BANNER)
-        val m = item.itemMeta as BannerMeta?
+        val item = ItemStack(Material.WHITE_BANNER)
+        val m = item.itemMeta as BannerMeta
 
-        val patterns: MutableList<Pattern> = ArrayList()
-        patterns.add(Pattern(DyeColor.RED, PatternType.FLOWER))
-        patterns.add(Pattern(DyeColor.RED, PatternType.STRIPE_TOP))
-        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_BOTTOM))
-        patterns.add(Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE))
+        val patterns: MutableList<Pattern> = java.util.ArrayList()
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.CROSS))
+        patterns.add(Pattern(DyeColor.WHITE, PatternType.CIRCLE))
+        patterns.add(Pattern(DyeColor.WHITE, PatternType.RHOMBUS))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.TRIANGLE_BOTTOM))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.TRIANGLE_TOP))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.SQUARE_BOTTOM_LEFT))
+        patterns.add(Pattern(DyeColor.BROWN, PatternType.STRAIGHT_CROSS))
+        patterns.add(Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.STRIPE_RIGHT))
+        patterns.add(Pattern(DyeColor.GRAY, PatternType.STRIPE_TOP))
 
-        m!!.patterns = patterns
+        m.patterns = patterns
 
         item.setItemMeta(m)
         super.playerReference.inventory.addItem(item)
