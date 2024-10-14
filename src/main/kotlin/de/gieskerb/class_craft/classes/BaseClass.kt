@@ -2,6 +2,7 @@ package de.gieskerb.class_craft.classes
 
 import de.gieskerb.class_craft.data.HorseData
 import de.gieskerb.class_craft.data.PlayerData
+import de.gieskerb.class_craft.commands.HorseCommand
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -68,9 +69,7 @@ abstract class BaseClass {
         } else if (level.toInt() == 7) {
             // Give horse access:
             PlayerData.getPlayerData(playerReference.name)?.horseData = horseData
-            playerReference.sendMessage(
-                "You have now unlocked your class specific horse! Use /horse for more details."
-            )
+            playerReference.sendMessage(                HorseCommand.unlockMessage            )
         } else if (level.toInt() == 10) {
             //Special ability
         } else {

@@ -77,16 +77,16 @@ class WarriorClass : BaseClass {
 
     override fun giveFirstToolReward() {
         val item = ItemStack(Material.STONE_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 1)
-        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 1)
+        item.addEnchantment(Enchantment.SHARPNESS, 2)
+        item.addEnchantment(Enchantment.UNBREAKING, 2)
         super.playerReference.inventory.addItem(item)
     }
 
     override fun giveSecondToolReward() {
-        val item = ItemStack(Material.DIAMOND_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 3)
-        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 2)
-        item.addUnsafeEnchantment(Enchantment.LOOTING, 1)
+        val item = ItemStack(Material.IRON_SWORD)
+        item.addEnchantment(Enchantment.SHARPNESS, 5)
+        item.addEnchantment(Enchantment.UNBREAKING, 3)
+        item.addEnchantment(Enchantment.LOOTING, 3)
         super.playerReference.inventory.addItem(item)
     }
 
@@ -95,9 +95,13 @@ class WarriorClass : BaseClass {
         item.addUnsafeEnchantment(Enchantment.SHARPNESS, 5)
         item.addUnsafeEnchantment(Enchantment.SMITE, 5)
         item.addUnsafeEnchantment(Enchantment.BANE_OF_ARTHROPODS, 5)
+        item.addUnsafeEnchantment(Enchantment.LOOTING, 5)
+        item.addUnsafeEnchantment(Enchantment.SWEEPING_EDGE, 5)
+        item.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3)
+        item.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3)
+        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
         super.playerReference.inventory.addItem(item)
     }
-
 
     companion object {
         const val CLASS_NAME: String = "Warrior"

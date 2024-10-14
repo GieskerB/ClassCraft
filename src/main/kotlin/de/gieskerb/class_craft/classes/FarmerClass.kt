@@ -13,6 +13,15 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.BannerMeta
 import org.json.simple.JSONObject
 
+/*
+ * Natures Bond: 
+ *  Ideen:
+ *      Schnellere Crops wachsum -> k.A. wie!
+ *      Wachstum ~halb überspringen
+ *      Bessere Drop Raten
+ *      Zwillings Chance -> k.A. wie!
+ */
+
 class FarmerClass : BaseClass {
     constructor(player: Player) : super(Companion.CLASS_NAME, player)
 
@@ -38,28 +47,28 @@ class FarmerClass : BaseClass {
             Material.DIAMOND_HORSE_ARMOR
         )
 
-    override fun giveFirstToolReward() {
-        val item = ItemStack(Material.STONE_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 1)
-        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 1)
-        super.playerReference.inventory.addItem(item)
-    }
-
-    override fun giveSecondToolReward() {
-        val item = ItemStack(Material.DIAMOND_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 3)
-        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 2)
-        item.addUnsafeEnchantment(Enchantment.LOOTING, 1)
-        super.playerReference.inventory.addItem(item)
-    }
-
-    override fun giveThirdToolReward() {
-        val item = ItemStack(Material.NETHERITE_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 5)
-        item.addUnsafeEnchantment(Enchantment.SMITE, 5)
-        item.addUnsafeEnchantment(Enchantment.BANE_OF_ARTHROPODS, 5)
-        super.playerReference.inventory.addItem(item)
-    }
+        override fun giveFirstToolReward() {
+            val item = ItemStack(Material.IRON_HOE)
+            item.addEnchantment(Enchantment.EFFICIENCY, 2)
+            item.addEnchantment(Enchantment.UNBREAKING, 2)
+            super.playerReference.inventory.addItem(item)
+        }
+    
+        override fun giveSecondToolReward() {
+            val item = ItemStack(Material.NETHERITE_SHOVEL)
+            item.addUnsafeEnchantment(Enchantment.EFFICIENCY, 5)
+            item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1)
+            item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
+            super.playerReference.inventory.addItem(item)
+        }
+    
+        override fun giveThirdToolReward() {
+            val item = ItemStack(Material.NETHERITE_HOE)
+            item.addEnchantment(Enchantment.EFFICIENCY, 5)
+            item.addEnchantment(Enchantment.FORTUNE, 5)
+            item.addEnchantment(Enchantment.UNBREAKING, 10)
+            super.playerReference.inventory.addItem(item)
+        }
 
     override fun giveBannerReward() {
         val item = ItemStack(Material.GRAY_BANNER)

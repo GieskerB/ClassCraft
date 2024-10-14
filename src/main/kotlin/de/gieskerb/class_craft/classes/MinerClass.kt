@@ -54,28 +54,28 @@ class MinerClass : BaseClass {
             Material.DIAMOND_HORSE_ARMOR
         )
 
-    override fun giveFirstToolReward() {
-        val item = ItemStack(Material.STONE_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 1)
-        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 1)
-        super.playerReference.inventory.addItem(item)
-    }
-
-    override fun giveSecondToolReward() {
-        val item = ItemStack(Material.DIAMOND_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 3)
-        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 2)
-        item.addUnsafeEnchantment(Enchantment.LOOTING, 1)
-        super.playerReference.inventory.addItem(item)
-    }
-
-    override fun giveThirdToolReward() {
-        val item = ItemStack(Material.NETHERITE_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 5)
-        item.addUnsafeEnchantment(Enchantment.SMITE, 5)
-        item.addUnsafeEnchantment(Enchantment.BANE_OF_ARTHROPODS, 5)
-        super.playerReference.inventory.addItem(item)
-    }
+        override fun giveFirstToolReward() {
+            val item = ItemStack(Material.STONE_PICKAXE)
+            item.addEnchantment(Enchantment.EFFICIENCY, 2)
+            item.addEnchantment(Enchantment.UNBREAKING, 2)
+            super.playerReference.inventory.addItem(item)
+        }
+    
+        override fun giveSecondToolReward() {
+            val item = ItemStack(Material.IRON_PICKAXE)
+            item.addEnchantment(Enchantment.EFFICIENCY, 5)
+            item.addEnchantment(Enchantment.UNBREAKING, 3)
+            item.addEnchantment(Enchantment.FORTUNE, 3)
+            super.playerReference.inventory.addItem(item)
+        }
+    
+        override fun giveThirdToolReward() {
+            val item = ItemStack(Material.NETHERITE_PICKAXE)
+            item.addUnsafeEnchantment(Enchantment.EFFICIENCY, 5)
+            item.addUnsafeEnchantment(Enchantment.FORTUNE, 5)
+            item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
+            super.playerReference.inventory.addItem(item)
+        }
 
     override fun giveBannerReward() {
         val item = ItemStack(Material.WHITE_BANNER)

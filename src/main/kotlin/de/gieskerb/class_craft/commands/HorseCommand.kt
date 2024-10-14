@@ -94,6 +94,10 @@ class HorseCommand : CommandExecutor {
     companion object {
         const val METADATA_IDENTIFIER: String = "CLASS_HORSE"
 
+        val unlockMessage: String
+            get() = "$6You have now unlocked your class specific horse! Use /horse for more details."
+        
+
         private var customizeMenu: Inventory? = null
 
         private fun generateItem(material: Material, name: String): ItemStack {

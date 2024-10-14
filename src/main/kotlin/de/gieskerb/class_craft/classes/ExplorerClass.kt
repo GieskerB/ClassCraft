@@ -38,28 +38,27 @@ class ExplorerClass : BaseClass {
             Material.DIAMOND_HORSE_ARMOR
         )
 
-    override fun giveFirstToolReward() {
-        val item = ItemStack(Material.STONE_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 1)
-        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 1)
-        super.playerReference.inventory.addItem(item)
-    }
-
-    override fun giveSecondToolReward() {
-        val item = ItemStack(Material.DIAMOND_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 3)
-        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 2)
-        item.addUnsafeEnchantment(Enchantment.LOOTING, 1)
-        super.playerReference.inventory.addItem(item)
-    }
-
-    override fun giveThirdToolReward() {
-        val item = ItemStack(Material.NETHERITE_SWORD)
-        item.addUnsafeEnchantment(Enchantment.SHARPNESS, 5)
-        item.addUnsafeEnchantment(Enchantment.SMITE, 5)
-        item.addUnsafeEnchantment(Enchantment.BANE_OF_ARTHROPODS, 5)
-        super.playerReference.inventory.addItem(item)
-    }
+        override fun giveFirstToolReward() {
+            val item = ItemStack(Material.CHAINMAIL_BOOTS)
+            item.addEnchantment(Enchantment.PROTECTION, 2)
+            item.addEnchantment(Enchantment.UNBREAKING, 2)
+            super.playerReference.inventory.addItem(item)
+        }
+    
+        override fun giveSecondToolReward() {
+            val item = ItemStack(Material.IRON_BOOTS)
+            item.addEnchantment(Enchantment.PROTECTION, 4)
+            item.addEnchantment(Enchantment.UNBREAKING, 3)
+            super.playerReference.inventory.addItem(item)
+        }
+    
+        override fun giveThirdToolReward() {
+            val item = ItemStack(Material.NETHERITE_HOE)
+            item.addEnchantment(Enchantment.PROTECTION, 5)
+            item.addEnchantment(Enchantment.FORTUNE, 5)
+            item.addEnchantment(Enchantment.UNBREAKING, 10)
+            super.playerReference.inventory.addItem(item)
+        }
 
     override fun giveBannerReward() {
         val item = ItemStack(Material.GRAY_BANNER)
