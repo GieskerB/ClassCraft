@@ -39,6 +39,7 @@ class Main : JavaPlugin() {
         pluginManager.registerEvents(HungerChangeListener(), this)
         pluginManager.registerEvents(InventoryClickListener(), this)
         pluginManager.registerEvents(InventoryOpenListener(), this)
+        pluginManager.registerEvents(PlayerItemConsumeListener(), this)
         pluginManager.registerEvents(PlayerJoinListener(), this)
         pluginManager.registerEvents(PlayerMoveListener(), this)
         pluginManager.registerEvents(PlayerQuitListener(), this)

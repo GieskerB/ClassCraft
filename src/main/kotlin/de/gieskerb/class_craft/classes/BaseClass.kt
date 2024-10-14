@@ -53,7 +53,6 @@ abstract class BaseClass {
         }
     }
 
-    // TODO Milk
     abstract fun reapplyRewardEffects()
     abstract fun removePermanentEffects()
 
