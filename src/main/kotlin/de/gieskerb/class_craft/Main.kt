@@ -2,6 +2,7 @@ package de.gieskerb.class_craft
 
 import de.gieskerb.class_craft.commands.ClassCommand
 import de.gieskerb.class_craft.commands.HorseCommand
+import de.gieskerb.class_craft.data.SpecialAbilityHandler
 import de.gieskerb.class_craft.listener.*
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
@@ -14,6 +15,7 @@ class Main : JavaPlugin() {
     companion object {
         lateinit var plugin: JavaPlugin
             private set
+        private lateinit var specialAbilityHandler: SpecialAbilityHandler
     }
 
     init {
@@ -45,6 +47,9 @@ class Main : JavaPlugin() {
         pluginManager.registerEvents(PlayerQuitListener(), this)
         pluginManager.registerEvents(RespawnListener(), this)
         pluginManager.registerEvents(WorldSaveListener(), this)
+
+        specialAbilityHandler = SpecialAbilityHandler()
+        specialAbilityHandler.runTaskTimer(this, 0L, 20L)
 
     }
 

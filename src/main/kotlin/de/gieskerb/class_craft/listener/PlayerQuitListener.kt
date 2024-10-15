@@ -48,7 +48,7 @@ class PlayerQuitListener : Listener {
             if (!playerFile.exists()) {
                 try {
                     if (!playerFile.createNewFile()) {
-                        Bukkit.getServer().broadcastMessage("§4Could create  PlayerData File for Player $playerName")
+                        Bukkit.getServer().broadcastMessage("§4Could create PlayerData File for Player $playerName")
                     }
                 } catch (e: IOException) {
                     Bukkit.getServer().broadcastMessage("§4Could not create PlayerData File for Player $playerName")

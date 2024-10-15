@@ -16,9 +16,24 @@ import org.bukkit.potion.PotionEffectType
 import org.json.simple.JSONObject
 
 class WarriorClass : BaseClass {
+
+    var killStreak: Double = 0.0
+        private set
+
     constructor(player: Player) : super(Companion.CLASS_NAME, player)
 
     constructor(json: JSONObject, player: Player) : super(json, player)
+
+    fun addKill() {
+        killStreak += 1
+    }
+
+    fun subsideStreak() {
+        killStreak *=.95
+
+        if (killStreak < 0.01)
+            killStreak = 0.0
+    }
 
     override fun reapplyRewardEffects() {
         if (super.level >= 17) {

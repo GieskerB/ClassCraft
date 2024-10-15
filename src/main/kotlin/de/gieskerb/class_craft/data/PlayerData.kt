@@ -8,7 +8,7 @@ import org.bukkit.scheduler.BukkitTask
 import org.json.simple.JSONObject
 
 class PlayerData {
-    private val assignedPlayer: String
+    val assignedPlayer: String
     var activeClass: BaseClass?
         private set
 
@@ -89,7 +89,7 @@ class PlayerData {
     }
 
     companion object {
-        private val allPlayerData = ArrayList<PlayerData>()
+        val allPlayerData = ArrayList<PlayerData>()
         fun addPlayerData(playerData: PlayerData) {
             allPlayerData.add(playerData)
         }

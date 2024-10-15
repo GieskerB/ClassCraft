@@ -54,9 +54,12 @@ class ExplorerClass : BaseClass {
     
         override fun giveThirdToolReward() {
             val item = ItemStack(Material.NETHERITE_HOE)
-            item.addEnchantment(Enchantment.PROTECTION, 5)
-            item.addEnchantment(Enchantment.FORTUNE, 5)
-            item.addEnchantment(Enchantment.UNBREAKING, 10)
+            item.addUnsafeEnchantment(Enchantment.PROTECTION, 5)
+            item.addUnsafeEnchantment(Enchantment.FORTUNE, 5)
+            item.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 5)
+            item.addUnsafeEnchantment(Enchantment.FEATHER_FALLING, 5)
+            item.addUnsafeEnchantment(Enchantment.FROST_WALKER, 3)
+            item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
             super.playerReference.inventory.addItem(item)
         }
 

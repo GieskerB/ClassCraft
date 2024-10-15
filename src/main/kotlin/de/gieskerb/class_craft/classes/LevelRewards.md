@@ -11,10 +11,10 @@
 | **7**  |    Horse     |    Horse     |     Horse      |    Horse     |      Horse      |     x |
 | **8**  |     E-xp     |     E-xp     |      E-xp      |     E-xp     |      E-xp       |     X |
 | **9**  |     E-xp     |     E-xp     |      E-xp      |     E-xp     |      E-xp       |     X |
-| **10** |  Blood-Lust  | Night-Vision |  Strong-Punch  | Natures-Bond | Extra-Inventory |     - |
+| **10** |  Blood-Lust  | Night-Vision | Tree-Twerking  | Natures-Bond | Extra-Inventory |     - |
 | **11** |     E-xp     |     E-xp     |      E-xp      |     E-xp     |      E-xp       |     X |
 | **12** |     E-xp     |     E-xp     |      E-xp      |     E-xp     |      E-xp       |     X |
-| **13** |  Good-Sword  | Good-Pickaxe |    Good-Axe    |   Good-Hoe   |   Good-Boots    |     - |
+| **13** |  Good-Sword  | Good-Pickaxe |    Good-Axe    |  OP-Shovel   |   Good-Boots    |     - |
 | **14** |     E-xp     |     E-xp     |      E-xp      |     E-xp     |      E-xp       |     X |
 | **15** |   Slowness   |  Less Heath  | Mining Fatigue |    Hunger    |    Weakness     |     X |
 | **16** |     E-xp     |     E-xp     |      E-xp      |     E-xp     |      E-xp       |     X |
@@ -26,11 +26,21 @@
 ## Description
 
 ### Blood-Lust
+
     When surronded by many Enemies get enraged and deal more damage faster.
+
 ### Night-Vision
+
     Over the time in the darkness yor body has adapted to the depth. Nightvison plus some other buffs maybe
-### String-Punch
-    ???
+
+### Tree-Twerking
+
+    Can buff growth speed to nearby saplings
+
 ### Natures-Bond
-    
+
+    Better drop rates from Crops
+
 ### Extra-Inventory
+
+    When shifting while opening the player inventory a special one opens

@@ -16,7 +16,6 @@ import org.json.simple.JSONObject
 /*
  * Natures Bond: 
  *  Ideen:
- *      Schnellere Crops wachsum -> k.A. wie!
  *      Wachstum ~halb überspringen
  *      Bessere Drop Raten
  *      Zwillings Chance -> k.A. wie!

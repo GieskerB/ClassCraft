@@ -34,6 +34,7 @@ class EntityDeathListener : Listener {
             when (playerClass) {
                 is WarriorClass -> {
                     if (warriorEntities!!.contains(EntityPair(event.entity.type))) {
+                        playerClass.addKill()
                         player.sendMessage("You have killed the right Entity!")
                     }
                 }
