@@ -27,9 +27,6 @@ class Main : JavaPlugin() {
         getCommand("class")?.setExecutor(ClassCommand())
         getCommand("horse")?.setExecutor(HorseCommand())
 
-        Bukkit.broadcastMessage("Hey there")
-        println("HI THERE")
-
         PlayerJoinListener.loadAllPlayersData()
 
         val pluginManager: PluginManager = Bukkit.getPluginManager()
@@ -46,6 +43,7 @@ class Main : JavaPlugin() {
         pluginManager.registerEvents(PlayerMoveListener(), this)
         pluginManager.registerEvents(PlayerQuitListener(), this)
         pluginManager.registerEvents(RespawnListener(), this)
+        pluginManager.registerEvents(ToggleSneakListener(),this)
         pluginManager.registerEvents(WorldSaveListener(), this)
 
         specialAbilityHandler = SpecialAbilityHandler()

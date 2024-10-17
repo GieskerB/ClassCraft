@@ -27,41 +27,40 @@ class ExplorerClass : BaseClass {
     override val classItem: ItemStack?
         get() = displayItem
 
-    override val horseData: HorseData
-        get() = HorseData(
-            Horse.Color.entries.toTypedArray()[(Math.random() * Horse.Color.entries.toTypedArray().size).toInt()],
-            Horse.Style.entries.toTypedArray()[(Math.random() * Horse.Style.entries.toTypedArray().size).toInt()],
-            0.3,
-            0.6,
-            60.0,
-            HorseData.horseNameByPlayer(super.playerReference, super.CLASS_NAME),
-            Material.DIAMOND_HORSE_ARMOR
-        )
+    override fun getInitialHorseData(): HorseData = HorseData(
+        Horse.Color.entries.toTypedArray()[(Math.random() * Horse.Color.entries.toTypedArray().size).toInt()],
+        Horse.Style.entries.toTypedArray()[(Math.random() * Horse.Style.entries.toTypedArray().size).toInt()],
+        0.3,
+        0.6,
+        60.0,
+        HorseData.horseNameByPlayer(super.playerReference, super.CLASS_NAME),
+        Material.DIAMOND_HORSE_ARMOR
+    )
 
-        override fun giveFirstToolReward() {
-            val item = ItemStack(Material.CHAINMAIL_BOOTS)
-            item.addEnchantment(Enchantment.PROTECTION, 2)
-            item.addEnchantment(Enchantment.UNBREAKING, 2)
-            super.playerReference.inventory.addItem(item)
-        }
-    
-        override fun giveSecondToolReward() {
-            val item = ItemStack(Material.IRON_BOOTS)
-            item.addEnchantment(Enchantment.PROTECTION, 4)
-            item.addEnchantment(Enchantment.UNBREAKING, 3)
-            super.playerReference.inventory.addItem(item)
-        }
-    
-        override fun giveThirdToolReward() {
-            val item = ItemStack(Material.NETHERITE_HOE)
-            item.addUnsafeEnchantment(Enchantment.PROTECTION, 5)
-            item.addUnsafeEnchantment(Enchantment.FORTUNE, 5)
-            item.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 5)
-            item.addUnsafeEnchantment(Enchantment.FEATHER_FALLING, 5)
-            item.addUnsafeEnchantment(Enchantment.FROST_WALKER, 3)
-            item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
-            super.playerReference.inventory.addItem(item)
-        }
+    override fun giveFirstToolReward() {
+        val item = ItemStack(Material.CHAINMAIL_BOOTS)
+        item.addEnchantment(Enchantment.PROTECTION, 2)
+        item.addEnchantment(Enchantment.UNBREAKING, 2)
+        super.playerReference.inventory.addItem(item)
+    }
+
+    override fun giveSecondToolReward() {
+        val item = ItemStack(Material.IRON_BOOTS)
+        item.addEnchantment(Enchantment.PROTECTION, 4)
+        item.addEnchantment(Enchantment.UNBREAKING, 3)
+        super.playerReference.inventory.addItem(item)
+    }
+
+    override fun giveThirdToolReward() {
+        val item = ItemStack(Material.NETHERITE_HOE)
+        item.addUnsafeEnchantment(Enchantment.PROTECTION, 5)
+        item.addUnsafeEnchantment(Enchantment.FORTUNE, 5)
+        item.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 5)
+        item.addUnsafeEnchantment(Enchantment.FEATHER_FALLING, 5)
+        item.addUnsafeEnchantment(Enchantment.FROST_WALKER, 3)
+        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
+        super.playerReference.inventory.addItem(item)
+    }
 
     override fun giveBannerReward() {
         val item = ItemStack(Material.GRAY_BANNER)

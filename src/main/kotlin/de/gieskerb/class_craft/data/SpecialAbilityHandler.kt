@@ -3,20 +3,33 @@ package de.gieskerb.class_craft.data
 import de.gieskerb.class_craft.classes.*
 import org.bukkit.Bukkit
 import org.bukkit.Chunk
+import org.bukkit.Location
+import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.entity.Player
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 
 class SpecialAbilityHandler : BukkitRunnable() {
 
-    private val BLOODLUST_RANGE = 10
+    companion object {
+        private val BLOODLUST_RANGE = 15
+        private val BLOODLUST_THRESHHOLD = 10
+        private val BLOODLUST_KILLS = 5
+
+        private val MINER_DEPTH = arrayOf(16, 0, -16)
+
+        private val LUMBERJACK_SAPLING_DISTANCE = 5
+    }
 
     private fun warriorHandler(activeClass: WarriorClass, player: Player) {
         // Bloodlust Ability
-        var offset = arrayOf(-1, 0, 1)
+        val chunkOffset = arrayOf(-1, 0, 1)
         val playerChunk = player.location.chunk
-        var surroundedChunk = ArrayList<Chunk>()
-        for (deltaX in offset) {
-            for (deltaZ in offset) {
+        val surroundedChunk = ArrayList<Chunk>()
+        for (deltaX in chunkOffset) {
+            for (deltaZ in chunkOffset) {
                 surroundedChunk.add(player.world.getChunkAt(playerChunk.x + deltaX, playerChunk.z + deltaZ))
             }
         }
@@ -33,17 +46,40 @@ class SpecialAbilityHandler : BukkitRunnable() {
             }
         }
 
-        // TODO buff player now
-        player.sendMessage(activeClass.killStreak.toString() + " " + entityCounter)
-
+        if (entityCounter >= BLOODLUST_THRESHHOLD && activeClass.killStreak >= BLOODLUST_KILLS) {
+            player.addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 5, 1))
+            player.addPotionEffect(PotionEffect(PotionEffectType.LUCK, 5, 4))
+            player.addPotionEffect(PotionEffect(PotionEffectType.ABSORPTION, 5, 3))
+        }
     }
 
     private fun minerHandler(activeClass: MinerClass, player: Player) {
+        val depth = player.location.y
 
+        if (depth < MINER_DEPTH[0]) player.addPotionEffect(PotionEffect(PotionEffectType.NIGHT_VISION, 5, 1))
+        if (depth < MINER_DEPTH[1]) player.addPotionEffect(PotionEffect(PotionEffectType.LUCK, 5, 2))
+        if (depth < MINER_DEPTH[2]) player.addPotionEffect(PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5, 1))
     }
 
     private fun lumberjackHandler(activeClass: LumberjackClass, player: Player) {
+        activeClass.surroundedSaplings.clear()
+        val playerLocation = player.location
+        val range = -LUMBERJACK_SAPLING_DISTANCE..LUMBERJACK_SAPLING_DISTANCE
+        for (deltaX in range) {
+            for (deltaY in range) {
+                for (deltaZ in range) {
+                    val block: Block = player.world.getBlockAt(
+                        (playerLocation.x + deltaX).toInt(),
+                        (playerLocation.y + deltaY).toInt(),
+                        (playerLocation.z + deltaZ).toInt()
+                    )
 
+                    if (block.type == Material.OAK_SAPLING || block.type == Material.BIRCH_SAPLING || block.type == Material.SPRUCE_SAPLING || block.type == Material.JUNGLE_SAPLING || block.type == Material.ACACIA_SAPLING || block.type == Material.DARK_OAK_SAPLING || block.type == Material.MANGROVE_PROPAGULE || block.type == Material.CHERRY_SAPLING || block.type == Material.CRIMSON_FUNGUS || block.type == Material.WARPED_FUNGUS) {
+                        activeClass.surroundedSaplings.add(block)
+                    }
+                }
+            }
+        }
     }
 
     private fun farmerHandler(activeClass: FarmerClass, player: Player) {

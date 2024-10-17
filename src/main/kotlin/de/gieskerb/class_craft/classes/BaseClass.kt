@@ -12,7 +12,6 @@ import org.json.simple.JSONObject
 abstract class BaseClass {
     val CLASS_NAME: String
     abstract val classItem: ItemStack?
-    protected abstract val horseData: HorseData?
     private val itemReceived: BooleanArray
     protected val playerReference: Player
     var level: Byte = 0
@@ -35,14 +34,14 @@ abstract class BaseClass {
 
     internal constructor(json: JSONObject, player: Player) {
         this.CLASS_NAME = json["class"].toString()
-        this.level = json["level"].toString().toByte()
-        this.xp = json["xp"].toString().toInt()
-        val jsonArray: JSONArray = json.get("rewardsClaimed") as JSONArray
+        val jsonArray: JSONArray = json["rewardsClaimed"] as JSONArray
         this.itemReceived = BooleanArray(jsonArray.size)
         for (i in 0 until jsonArray.size) {
             itemReceived[i] = jsonArray[i] as Boolean
         }
         this.playerReference = player
+        this.level = json["level"].toString().toByte()
+        this.xp = json["xp"].toString().toInt()
     }
 
     private fun checkLevelUp() {
@@ -56,6 +55,7 @@ abstract class BaseClass {
     abstract fun reapplyRewardEffects()
     abstract fun removePermanentEffects()
 
+    protected abstract fun getInitialHorseData(): HorseData
     protected abstract fun giveBannerReward()
     protected abstract fun giveFirstToolReward()
     protected abstract fun giveSecondToolReward()
@@ -67,13 +67,13 @@ abstract class BaseClass {
             this.reapplyRewardEffects()
         } else if (level.toInt() == 7) {
             // Give horse access:
-            PlayerData.getPlayerData(playerReference.name)?.horseData = horseData
-            playerReference.sendMessage(                HorseCommand.unlockMessage            )
+            PlayerData.getPlayerData(playerReference.name)?.horseData = getInitialHorseData()
+            playerReference.sendMessage(HorseCommand.unlockMessage)
         } else if (level.toInt() == 10) {
             //Special ability
         } else {
             // Give Exp
-            this.playerReference?.giveExp(this.level * 25)
+            this.playerReference.giveExp(this.level * 25)
         }
     }
 
@@ -136,6 +136,7 @@ abstract class BaseClass {
     }
 
     companion object {
+
         private const val MAX_LEVEL: Byte = 20
 
         private fun getNetLevelStep(level: Int): Int {

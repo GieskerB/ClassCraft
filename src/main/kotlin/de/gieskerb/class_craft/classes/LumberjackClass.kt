@@ -3,6 +3,7 @@ package de.gieskerb.class_craft.classes
 import de.gieskerb.class_craft.data.HorseData
 import org.bukkit.DyeColor
 import org.bukkit.Material
+import org.bukkit.block.Block
 import org.bukkit.block.banner.Pattern
 import org.bukkit.block.banner.PatternType
 import org.bukkit.enchantments.Enchantment
@@ -19,6 +20,19 @@ class LumberjackClass : BaseClass {
     constructor(player: Player) : super(Companion.CLASS_NAME, player)
 
     constructor(json: JSONObject, player: Player) : super(json, player)
+
+    val surroundedSaplings: ArrayList<Block> = ArrayList()
+
+    override fun getInitialHorseData(): HorseData = HorseData(
+        Horse.Color.entries.toTypedArray()[(Math.random() * Horse.Color.entries.toTypedArray().size).toInt()],
+        Horse.Style.entries.toTypedArray()[(Math.random() * Horse.Style.entries.toTypedArray().size).toInt()],
+        0.3,
+        0.6,
+        60.0,
+        HorseData.horseNameByPlayer(super.playerReference, super.CLASS_NAME),
+        Material.DIAMOND_HORSE_ARMOR
+    )
+
 
     override fun reapplyRewardEffects() {
         if (super.level >= 17) {
@@ -39,16 +53,8 @@ class LumberjackClass : BaseClass {
     override val classItem: ItemStack?
         get() = displayItem
 
-    override val horseData: HorseData
-        get() = HorseData(
-            Horse.Color.entries.toTypedArray()[(Math.random() * Horse.Color.entries.toTypedArray().size).toInt()],
-            Horse.Style.entries.toTypedArray()[(Math.random() * Horse.Style.entries.toTypedArray().size).toInt()],
-            0.3,
-            0.6,
-            60.0,
-            HorseData.horseNameByPlayer(super.playerReference, super.CLASS_NAME),
-            Material.DIAMOND_HORSE_ARMOR
-        )
+//    override val horseData: HorseData
+//        get() =
 
     override fun giveBannerReward() {
         val item = ItemStack(Material.WHITE_BANNER)

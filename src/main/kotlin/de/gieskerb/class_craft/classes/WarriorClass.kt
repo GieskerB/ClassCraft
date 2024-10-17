@@ -35,6 +35,16 @@ class WarriorClass : BaseClass {
             killStreak = 0.0
     }
 
+    override fun getInitialHorseData(): HorseData = HorseData(
+        Horse.Color.entries.toTypedArray()[(Math.random() * Horse.Color.entries.toTypedArray().size).toInt()],
+        Horse.Style.entries.toTypedArray()[(Math.random() * Horse.Style.entries.toTypedArray().size).toInt()],
+        0.3,
+        0.6,
+        60.0,
+        HorseData.horseNameByPlayer(super.playerReference, super.CLASS_NAME),
+        Material.DIAMOND_HORSE_ARMOR
+    )
+
     override fun reapplyRewardEffects() {
         if (super.level >= 17) {
             super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, -1, 1, false, false))
@@ -53,19 +63,6 @@ class WarriorClass : BaseClass {
 
     override val classItem: ItemStack?
         get() = displayItem
-
-    override val horseData: HorseData
-        get() = HorseData(
-            Horse.Color.entries.toTypedArray()
-                .get((Math.random() * Horse.Color.entries.toTypedArray().size).toInt()),
-           Horse.Style.entries.toTypedArray()
-                .get((Math.random() * Horse.Style.entries.toTypedArray().size).toInt()),
-            0.3,
-            0.6,
-            60.0,
-            HorseData.horseNameByPlayer(super.playerReference, super.CLASS_NAME),
-            Material.DIAMOND_HORSE_ARMOR
-        )
 
     override fun giveBannerReward() {
         val item = ItemStack(Material.GRAY_BANNER)
