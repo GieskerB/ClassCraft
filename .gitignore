@@ -1,6 +1,7 @@
 # Minecraft Server
 
 server/
+spigot builder/
 
 # User-specific stuff
 .idea/

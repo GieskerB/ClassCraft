@@ -1,8 +1,4 @@
 name: ClassCraft
-version: '1.0-DEV'
-main: de.gieskerb.class_craft.Main
+version: '1.0-Dev'
+main: de.gieskerb.classCraft.ClassCraft
 api-version: '1.21'
-authors: [ Bjarne Giesker ]
-commands:
-  class:
-  horse:
