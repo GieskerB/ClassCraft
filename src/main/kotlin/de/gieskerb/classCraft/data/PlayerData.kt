@@ -3,6 +3,8 @@ package de.gieskerb.classCraft.data
 import de.gieskerb.classCraft.Main
 import de.gieskerb.classCraft.classes.BaseClass
 import de.gieskerb.classCraft.listener.HungerChangeListener
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.encodeToJsonElement
@@ -10,6 +12,7 @@ import kotlinx.serialization.json.jsonObject
 import org.bukkit.Bukkit
 import org.bukkit.scheduler.BukkitTask
 
+@Serializable
 class PlayerData {
     private val assignedPlayer: String
     var activeClass: BaseClass?

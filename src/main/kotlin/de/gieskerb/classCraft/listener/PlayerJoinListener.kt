@@ -16,8 +16,12 @@ class PlayerJoinListener : Listener {
 
         if (!folder.exists()) {
             if (!folder.mkdir()) {
-                Bukkit.getServer().broadcast(Component.text("Could not create Folder for ClassCraft-Plugin",
-                    TextColor.color(0xAA0000)))
+                Bukkit.getServer().broadcast(
+                    Component.text(
+                        "Could not create Folder for ClassCraft-Plugin",
+                        TextColor.color(0xAA0000)
+                    )
+                )
             }
         }
 
@@ -25,8 +29,12 @@ class PlayerJoinListener : Listener {
 
         if (!folder.exists()) {
             if (!folder.mkdir()) {
-                Bukkit.getServer().broadcast(Component.text("Could not create PlayerData Folder for ClassCraft-Plugin",
-                    TextColor.color(0xAA0000)))
+                Bukkit.getServer().broadcast(
+                    Component.text(
+                        "Could not create PlayerData Folder for ClassCraft-Plugin",
+                        TextColor.color(0xAA0000)
+                    )
+                )
             }
         }
     }
@@ -42,16 +50,18 @@ class PlayerJoinListener : Listener {
         val playerClass = playerData.activeClass
         if (playerClass != null) {
             // "§eThe §6" + playerClass.CLASS_NAME + " §9" + playerName + "§e joined the game!"
-            event.joinMessage(Component.text("The ", TextColor.color(0xFFFF55))
-                .append(Component.text(playerData.activeClass!!.className, TextColor.color(0xFFAA00)))
-                .append(Component.text(playerName, TextColor.color(0x5555FF)))
-                .append(Component.text(" joined the game!", TextColor.color(0xFFFF55)))
+            event.joinMessage(
+                Component.text("The ", TextColor.color(0xFFFF55))
+                    .append(Component.text(playerData.activeClass!!.className, TextColor.color(0xFFAA00)))
+                    .append(Component.text(" $playerName", TextColor.color(0x5555FF)))
+                    .append(Component.text(" joined the game!", TextColor.color(0xFFFF55)))
             )
             playerClass.reapplyRewardEffects()
         } else {
             // "§9$playerName§e joined the game!"
-            event.joinMessage(Component.text(playerName, TextColor.color(0x5555FF))
-                .append(Component.text(" joined the game!", TextColor.color(0xFFFF55)))
+            event.joinMessage(
+                Component.text(playerName, TextColor.color(0x5555FF))
+                    .append(Component.text(" joined the game!", TextColor.color(0xFFFF55)))
             )
         }
     }
@@ -86,7 +96,7 @@ class PlayerJoinListener : Listener {
 //                    Bukkit.getServer().broadcastMessage(
 //                        "§4Could not load PlayerData for Player " + playerName + " due to " + e.javaClass.getSimpleName()
 //                    )
-                    playerData = PlayerData(playerName)
+                playerData = PlayerData(playerName)
 //                }
             } else {
                 playerData = PlayerData(playerName)

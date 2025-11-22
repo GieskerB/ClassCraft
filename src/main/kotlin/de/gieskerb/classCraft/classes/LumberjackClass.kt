@@ -1,6 +1,7 @@
 package de.gieskerb.classCraft.classes
 
 import de.gieskerb.classCraft.data.HorseData
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
@@ -18,6 +19,7 @@ import org.bukkit.inventory.meta.BannerMeta
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
+@Serializable
 class LumberjackClass : BaseClass {
     constructor(player: Player) : super(CLASS_IDENTIFIER, player)
 
@@ -25,21 +27,21 @@ class LumberjackClass : BaseClass {
 
     override fun reapplyRewardEffects() {
         if (super.level >= 17) {
-            super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 1, false, false))
+            super.playerReference?.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 1, false, false))
         } else if (super.level >= 5) {
-            super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 0, false, false))
+            super.playerReference?.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 0, false, false))
         }
         if (super.level >= 15) {
-            super.playerReference.addPotionEffect(PotionEffect(PotionEffectType.SLOWNESS, -1, 0, false, false))
+            super.playerReference?.addPotionEffect(PotionEffect(PotionEffectType.SLOWNESS, -1, 0, false, false))
         }
     }
 
     override fun removePermanentEffects() {
-        super.playerReference.removePotionEffect(PotionEffectType.RESISTANCE)
-        super.playerReference.removePotionEffect(PotionEffectType.SLOWNESS)
+        super.playerReference?.removePotionEffect(PotionEffectType.RESISTANCE)
+        super.playerReference?.removePotionEffect(PotionEffectType.SLOWNESS)
     }
 
-    override val classItem: ItemStack?
+    override val classItem: ItemStack
         get() = displayItem
 
     override val horseData: HorseData
@@ -49,7 +51,7 @@ class LumberjackClass : BaseClass {
             0.3,
             0.6,
             60.0,
-            HorseData.horseNameByPlayer(super.playerReference, super.className),
+            HorseData.horseNameByPlayer(super.playerReference!!, super.className),
             Material.DIAMOND_HORSE_ARMOR
         )
 
@@ -72,14 +74,14 @@ class LumberjackClass : BaseClass {
         m.patterns = patterns
 
         item.setItemMeta(m)
-        super.playerReference.inventory.addItem(item)
+        super.playerReference?.inventory?.addItem(item)
     }
 
     override fun giveFirstToolReward() {
         val item = ItemStack(Material.STONE_AXE)
         item.addEnchantment(Enchantment.EFFICIENCY, 2)
         item.addEnchantment(Enchantment.UNBREAKING, 2)
-        super.playerReference.inventory.addItem(item)
+        super.playerReference?.inventory?.addItem(item)
     }
 
     override fun giveSecondToolReward() {
@@ -87,7 +89,7 @@ class LumberjackClass : BaseClass {
         item.addEnchantment(Enchantment.EFFICIENCY, 5)
         item.addEnchantment(Enchantment.UNBREAKING, 3)
         item.addEnchantment(Enchantment.FORTUNE, 3)
-        super.playerReference.inventory.addItem(item)
+        super.playerReference?.inventory?.addItem(item)
     }
 
     override fun giveThirdToolReward() {
@@ -95,23 +97,22 @@ class LumberjackClass : BaseClass {
         item.addUnsafeEnchantment(Enchantment.EFFICIENCY, 5)
         item.addUnsafeEnchantment(Enchantment.FORTUNE, 5)
         item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
-        super.playerReference.inventory.addItem(item)
+        super.playerReference?.inventory?.addItem(item)
     }
 
     companion object {
         const val CLASS_IDENTIFIER: String = "Lumberjack"
-        var displayItem: ItemStack? = null
+        var displayItem: ItemStack = ItemStack(Material.NETHERITE_AXE)
             get() {
-                if (field == null) {
-                    field = ItemStack(Material.NETHERITE_AXE)
-                    val itemMeta = checkNotNull(field!!.itemMeta)
+                if (!field.itemMeta.itemName().toString().startsWith(CLASS_IDENTIFIER)) {
+                    val itemMeta = checkNotNull(field.itemMeta)
                     itemMeta.itemName(Component.text("$CLASS_IDENTIFIER-Class", TextColor.color(0xFFAA00), TextDecoration.BOLD))
                     val loreList: MutableList<Component> = ArrayList()
                     loreList.add(Component.text("This is a lore line!", TextColor.color(0x00AA00)))
                     loreList.add(Component.text("And this is a lore line, too!", TextColor.color(0x00AA00)))
                     itemMeta.lore(loreList)
                     itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                    field!!.setItemMeta(itemMeta)
+                    field.setItemMeta(itemMeta)
                 }
                 return field
             }
