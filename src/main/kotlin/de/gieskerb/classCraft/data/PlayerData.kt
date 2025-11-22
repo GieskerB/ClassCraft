@@ -9,7 +9,6 @@ import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.json.jsonObject
 import org.bukkit.Bukkit
 import org.bukkit.scheduler.BukkitTask
-import kotlin.text.get
 
 class PlayerData {
     private val assignedPlayer: String
@@ -32,7 +31,7 @@ class PlayerData {
     }
 
     constructor(json: JsonObject) {
-        this.assignedPlayer = json.get("player").toString()
+        this.assignedPlayer = json["player"].toString()
         this.activeClass = Bukkit.getPlayer(assignedPlayer)?.let { BaseClass.fromJSON(json["class"] as JsonObject, it) }
         this.horseData = HorseData.fromJSON(json["horse"] as JsonObject)
     }
@@ -84,7 +83,7 @@ class PlayerData {
         this.resetClass()
         this.activeClass = activeBaseClass
         Bukkit.getPlayer(assignedPlayer)?.sendMessage(
-            "§aYou selected the §6" + activeClass!!.CLASS_NAME + " Class"
+            "§aYou selected the §6" + activeClass!!.className + " Class"
         )
     }
 

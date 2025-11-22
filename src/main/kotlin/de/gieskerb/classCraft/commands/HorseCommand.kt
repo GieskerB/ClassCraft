@@ -4,8 +4,11 @@ import de.gieskerb.classCraft.Main
 import de.gieskerb.classCraft.data.DistanceTracker
 import de.gieskerb.classCraft.data.HorseData
 import de.gieskerb.classCraft.data.PlayerData
+import net.kyori.adventure.text.Component
 import io.papermc.paper.command.brigadier.BasicCommand
 import io.papermc.paper.command.brigadier.CommandSourceStack
+import net.kyori.adventure.text.format.TextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.attribute.Attribute
@@ -32,7 +35,7 @@ class HorseCommand : BasicCommand {
             horse.style = horseData.style
             horse.getAttribute(Attribute.MAX_HEALTH)!!.baseValue = horseData.health
             horse.health = horseData.health
-            horse.customName = horseData.name
+            horse.customName(Component.text(horseData.name))
             horse.isCustomNameVisible = true
             horse.inventory.armor = ItemStack(horseData.armor)
             horse.inventory.saddle = ItemStack(Material.SADDLE)
@@ -101,7 +104,7 @@ class HorseCommand : BasicCommand {
         private fun generateItem(material: Material, name: String): ItemStack {
             val item = ItemStack(material)
             val meta = item.itemMeta
-            meta!!.setDisplayName("§r§7§l$name")
+            meta!!.displayName(Component.text(name, TextColor.color(0xAAAAAA), TextDecoration.BOLD))
             item.setItemMeta(meta)
             return item
         }
@@ -109,7 +112,7 @@ class HorseCommand : BasicCommand {
         fun getCustomizeMenu(player: Player): Inventory? {
             if (customizeMenu == null) {
                 val invSize = 45
-                customizeMenu = Bukkit.createInventory(null, invSize, "Customize your Horse")
+                customizeMenu = Bukkit.createInventory(null, invSize, Component.text("Customize your Horse"))
 
                 for (i in 0 until invSize) {
                     if (i % 9 == 0 || i % 9 == 8 || (i % 9 == 1 && i > 10) || (i % 9 == 7 && i > 16) || i / 9 == 2) {

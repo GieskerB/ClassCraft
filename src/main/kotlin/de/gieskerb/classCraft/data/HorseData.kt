@@ -8,8 +8,6 @@ import kotlinx.serialization.json.jsonObject
 import org.bukkit.Material
 import org.bukkit.entity.Horse
 import org.bukkit.entity.Player
-import java.io.File
-import kotlin.text.get
 
 @Serializable
 class HorseData {

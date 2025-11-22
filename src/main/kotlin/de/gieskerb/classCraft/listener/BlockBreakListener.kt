@@ -41,10 +41,9 @@ class BlockBreakListener : Listener {
             is FarmerClass -> {
                 if (farmerBlocks!!.contains(MaterialPair(block.type))) {
                     player.sendMessage("You have farmed the right Block!")
-                    // dont forget AGE
+                    // TODO dont forget age
                 }
             }
-
             else -> {}
         }
     }

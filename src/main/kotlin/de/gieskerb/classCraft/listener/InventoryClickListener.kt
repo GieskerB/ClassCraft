@@ -25,18 +25,25 @@ class InventoryClickListener : Listener {
 
             val player = event.whoClicked
             checkNotNull(clickedItem)
-            val newClass = if (clickedItem == WarriorClass.displayItem) {
-                WarriorClass(event.whoClicked as Player)
-            } else if (clickedItem == MinerClass.displayItem) {
-                MinerClass(event.whoClicked as Player)
-            } else if (clickedItem == LumberjackClass.displayItem) {
-                LumberjackClass(event.whoClicked as Player)
-            } else if (clickedItem == FarmerClass.displayItem) {
-                FarmerClass(event.whoClicked as Player)
-            } else if (clickedItem == ExplorerClass.displayItem) {
-                ExplorerClass(event.whoClicked as Player)
-            } else {
-                return
+            val newClass = when (clickedItem) {
+                WarriorClass.displayItem -> {
+                    WarriorClass(event.whoClicked as Player)
+                }
+                MinerClass.displayItem -> {
+                    MinerClass(event.whoClicked as Player)
+                }
+                LumberjackClass.displayItem -> {
+                    LumberjackClass(event.whoClicked as Player)
+                }
+                FarmerClass.displayItem -> {
+                    FarmerClass(event.whoClicked as Player)
+                }
+                ExplorerClass.displayItem -> {
+                    ExplorerClass(event.whoClicked as Player)
+                }
+                else -> {
+                    return
+                }
             }
             player.closeInventory()
             PlayerData.getPlayerData(player.name)!!.changeClass(newClass)

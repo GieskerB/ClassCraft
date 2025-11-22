@@ -2,13 +2,13 @@ package de.gieskerb.classCraft.listener
 
 import de.gieskerb.classCraft.Main
 import de.gieskerb.classCraft.data.PlayerData
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import java.io.File
-import java.io.FileReader
-import java.io.IOException
 
 class PlayerJoinListener : Listener {
     private fun createFolder() {
@@ -16,7 +16,8 @@ class PlayerJoinListener : Listener {
 
         if (!folder.exists()) {
             if (!folder.mkdir()) {
-                Bukkit.getServer().broadcastMessage("§4Could create folder for ClassCraft-Plugin")
+                Bukkit.getServer().broadcast(Component.text("Could not create Folder for ClassCraft-Plugin",
+                    TextColor.color(0xAA0000)))
             }
         }
 
@@ -24,7 +25,8 @@ class PlayerJoinListener : Listener {
 
         if (!folder.exists()) {
             if (!folder.mkdir()) {
-                Bukkit.getServer().broadcastMessage("§4Could create folder for PlayerData in ClassCraft-Plugin")
+                Bukkit.getServer().broadcast(Component.text("Could not create PlayerData Folder for ClassCraft-Plugin",
+                    TextColor.color(0xAA0000)))
             }
         }
     }
@@ -39,10 +41,18 @@ class PlayerJoinListener : Listener {
 
         val playerClass = playerData.activeClass
         if (playerClass != null) {
-            event.joinMessage = "§eThe §6" + playerClass.CLASS_NAME + " §9" + playerName + " §ejoined the game!"
+            // "§eThe §6" + playerClass.CLASS_NAME + " §9" + playerName + "§e joined the game!"
+            event.joinMessage(Component.text("The ", TextColor.color(0xFFFF55))
+                .append(Component.text(playerData.activeClass!!.className, TextColor.color(0xFFAA00)))
+                .append(Component.text(playerName, TextColor.color(0x5555FF)))
+                .append(Component.text(" joined the game!", TextColor.color(0xFFFF55)))
+            )
             playerClass.reapplyRewardEffects()
         } else {
-            event.joinMessage = "§9$playerName §ejoined the game!"
+            // "§9$playerName§e joined the game!"
+            event.joinMessage(Component.text(playerName, TextColor.color(0x5555FF))
+                .append(Component.text(" joined the game!", TextColor.color(0xFFFF55)))
+            )
         }
     }
 

@@ -9,6 +9,7 @@ import de.gieskerb.classCraft.classes.WarriorClass
 import de.gieskerb.classCraft.data.PlayerData
 import io.papermc.paper.command.brigadier.BasicCommand
 import io.papermc.paper.command.brigadier.CommandSourceStack
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -90,7 +91,7 @@ class ClassCommand : BasicCommand {
                             } else {
                                 sender.sendMessage("You dont have a class selected right now.")
                             }
-                        } catch (e: NumberFormatException) {
+                        } catch (_: NumberFormatException) {
                             sender.sendMessage("Invalid level. Value must be an integer between 0 and 20!")
                         }
                     }
@@ -111,7 +112,7 @@ class ClassCommand : BasicCommand {
             get() {
                 if (selectMenu == null) {
                     val invSize = 27
-                    selectMenu = Bukkit.createInventory(null, invSize, "Select your class")
+                    selectMenu = Bukkit.createInventory(null, invSize, Component.text("Select your class"))
 
                     for (i in 0 until invSize) {
                         if (i != 9 && i != 11 && i != 13 && i != 15 && i != 17) {
@@ -131,7 +132,7 @@ class ClassCommand : BasicCommand {
         fun getLevelMenu(player: Player): Inventory? {
             val invSize = 45
             if (levelMenu == null) {
-                levelMenu = Bukkit.createInventory(null, invSize, "Level up your class")
+                levelMenu = Bukkit.createInventory(null, invSize, Component.text("Level up your class"))
 
                 for (i in 0 until invSize) {
                     if (i <= 9 || i >= 35 || i % 9 == 0 || i % 9 == 8) {
@@ -159,7 +160,7 @@ class ClassCommand : BasicCommand {
                     )
 
                     val levelPaneItemMeta = levelPane.itemMeta
-                    levelPaneItemMeta!!.setDisplayName("§rLevel: $levelPaneIndex")
+                    levelPaneItemMeta!!.displayName(Component.text("Level: $levelPaneIndex"))
                     levelPane.setItemMeta(levelPaneItemMeta)
                     levelMenu!!.setItem(i, levelPane)
                     levelPaneIndex++

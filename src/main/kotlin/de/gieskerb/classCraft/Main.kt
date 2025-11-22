@@ -16,7 +16,6 @@ import de.gieskerb.classCraft.listener.RespawnListener
 import de.gieskerb.classCraft.listener.WorldSaveListener
 import de.gieskerb.classCraft.commands.ClassCommand
 import de.gieskerb.classCraft.commands.HorseCommand
-import io.papermc.paper.command.brigadier.BasicCommand
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
@@ -36,7 +35,7 @@ class Main : JavaPlugin() {
     override fun onEnable() {
         // Plugin startup logic
         plugin.registerCommand("class",ClassCommand())
-        plugin.registerCommand("horse",HorseCommand());
+        plugin.registerCommand("horse",HorseCommand())
 
         PlayerJoinListener.loadAllPlayersData()
 

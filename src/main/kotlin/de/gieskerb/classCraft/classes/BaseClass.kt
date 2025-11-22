@@ -3,26 +3,19 @@ package de.gieskerb.classCraft.classes
 import de.gieskerb.classCraft.data.HorseData
 import de.gieskerb.classCraft.data.PlayerData
 import de.gieskerb.classCraft.commands.HorseCommand
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import kotlin.collections.get
-import kotlin.text.get
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.io.File
 
 @Serializable
 abstract class BaseClass {
-    val CLASS_NAME: String
+    val className: String
     abstract val classItem: ItemStack?
     protected abstract val horseData: HorseData?
     private val itemReceived: BooleanArray
@@ -40,13 +33,13 @@ abstract class BaseClass {
     internal constructor(name: String, player: Player) {
         this.level = 0
         this.xp = 0
-        this.CLASS_NAME = name
+        this.className = name
         this.playerReference = player
         this.itemReceived = BooleanArray(4)
     }
 
     internal constructor(json: JsonObject, player: Player) {
-        this.CLASS_NAME = json["class"].toString()
+        this.className = json["class"].toString()
         this.level = json["level"].toString().toByte()
         this.xp = json["xp"].toString().toInt()
         val jsonArray = json["rewardsClaimed"]!!.jsonArray
@@ -61,7 +54,7 @@ abstract class BaseClass {
     private fun checkLevelUp() {
         if (this.xp >= getNetLevelStep(level.toInt()) && this.level >= MAX_LEVEL) {
             level++
-            Bukkit.getServer().broadcastMessage("LevelUp")
+//            Bukkit.getServer().broadcastMessage("LevelUp")
             this.checkNonItemReward()
         }
     }
@@ -86,7 +79,7 @@ abstract class BaseClass {
             //Special ability
         } else {
             // Give Exp
-            this.playerReference?.giveExp(this.level * 25)
+            this.playerReference.giveExp(this.level * 25)
         }
     }
 
@@ -155,9 +148,9 @@ abstract class BaseClass {
         private const val MAX_LEVEL: Byte = 20
 
         private fun getNetLevelStep(level: Int): Int {
-            val MAX_LEVEL_XP = 1000
-            val FACTOR = (level + 1) * (level + 1) / 400.0
-            return (FACTOR * MAX_LEVEL_XP).toInt()
+            val maxLevelEXP = 1000
+            val factor = (level + 1) * (level + 1) / 400.0
+            return (factor * maxLevelEXP).toInt()
         }
 
         fun fromJSON(json: JsonObject, player: Player): BaseClass? {
@@ -168,11 +161,11 @@ abstract class BaseClass {
 //            val json: JsonObject = Json.parseToJsonElement(jsonFile.readText()).jsonObject
             val className = json["class"]?.jsonPrimitive?.contentOrNull ?: return null
             return when (className) {
-                WarriorClass.Companion.CLASS_NAME -> WarriorClass(json, player)
-                MinerClass.Companion.CLASS_NAME -> MinerClass(json, player)
-                LumberjackClass.Companion.CLASS_NAME -> LumberjackClass(json, player)
-                FarmerClass.Companion.CLASS_NAME -> FarmerClass(json, player)
-                ExplorerClass.Companion.CLASS_NAME -> ExplorerClass(json, player)
+                WarriorClass.CLASS_IDENTIFIER -> WarriorClass(json, player)
+                MinerClass.CLASS_IDENTIFIER -> MinerClass(json, player)
+                LumberjackClass.CLASS_IDENTIFIER -> LumberjackClass(json, player)
+                FarmerClass.CLASS_IDENTIFIER -> FarmerClass(json, player)
+                ExplorerClass.CLASS_IDENTIFIER -> ExplorerClass(json, player)
                 else -> null
             }
         }

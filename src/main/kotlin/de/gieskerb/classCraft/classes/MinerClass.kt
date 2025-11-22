@@ -2,6 +2,9 @@ package de.gieskerb.classCraft.classes
 
 import de.gieskerb.classCraft.data.HorseData
 import kotlinx.serialization.json.JsonObject
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.DyeColor
 import org.bukkit.Material
 import org.bukkit.attribute.Attribute
@@ -18,7 +21,7 @@ import org.bukkit.potion.PotionEffectType
 import java.util.Objects
 
 class MinerClass : BaseClass {
-    constructor(player: Player) : super(Companion.CLASS_NAME, player)
+    constructor(player: Player) : super(CLASS_IDENTIFIER, player)
 
     constructor(json: JsonObject, player: Player) : super(json, player)
 
@@ -50,7 +53,7 @@ class MinerClass : BaseClass {
             0.3,
             0.6,
             60.0,
-            HorseData.horseNameByPlayer(super.playerReference, super.CLASS_NAME),
+            HorseData.horseNameByPlayer(super.playerReference, super.className),
             Material.DIAMOND_HORSE_ARMOR
         )
 
@@ -96,17 +99,17 @@ class MinerClass : BaseClass {
     }
 
     companion object {
-        const val CLASS_NAME: String = "Miner"
+        const val CLASS_IDENTIFIER: String = "Miner"
         var displayItem: ItemStack? = null
             get() {
                 if (field == null) {
                     field = ItemStack(Material.NETHERITE_PICKAXE)
                     val itemMeta = checkNotNull(field!!.itemMeta)
-                    itemMeta.setItemName("§6§lMiner-Class")
-                    val loreList: MutableList<String> = ArrayList()
-                    loreList.add("§r§2super is a lore line!")
-                    loreList.add("§r§2And super is anoter one.")
-                    itemMeta.lore = loreList
+                    itemMeta.itemName(Component.text("$CLASS_IDENTIFIER-Class", TextColor.color(0xFFAA00), TextDecoration.BOLD))
+                    val loreList: MutableList<Component> = ArrayList()
+                    loreList.add(Component.text("This is a lore line!", TextColor.color(0x00AA00)))
+                    loreList.add(Component.text("And this is a lore line, too!", TextColor.color(0x00AA00)))
+                    itemMeta.lore(loreList)
                     itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     field!!.setItemMeta(itemMeta)
                 }

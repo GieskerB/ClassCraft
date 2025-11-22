@@ -19,6 +19,7 @@ class BlockPlaceListener : Listener {
             || lumberjackBlocks!!.contains(MaterialPair(block.type))
             || farmerBlocks!!.contains(MaterialPair(block.type))
         ) {
+            // TODO: Bitmap structure (dynamically loaded into ram (ChunkLoadEvent))
             block.setMetadata("PLACED", FixedMetadataValue(Main.plugin, block))
         }
     }

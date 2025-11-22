@@ -14,7 +14,7 @@ class EntityBreedListener : Listener {
         if (event.breeder !is Player) {
             return
         }
-        val player: Player = event.breeder as Player;
+        val player: Player = event.breeder as Player
         val playerClass: BaseClass? = PlayerData.getPlayerData(player.name)?.activeClass
         if (playerClass is FarmerClass) {
             player.sendMessage("You have breed an animal!")

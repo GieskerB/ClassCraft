@@ -1,5 +1,7 @@
 package de.gieskerb.classCraft.commands
 
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
@@ -11,7 +13,7 @@ object HandyItems {
             if (field == null) {
                 field = ItemStack(Material.RED_STAINED_GLASS_PANE)
                 val notSelectedItemMeta = field!!.itemMeta
-                notSelectedItemMeta!!.setDisplayName("§r§cNot Selected")
+                notSelectedItemMeta!!.displayName(Component.text("Not Selected", TextColor.color(0xFF5555)))
                 field!!.setItemMeta(notSelectedItemMeta)
             }
             return field
@@ -22,7 +24,7 @@ object HandyItems {
             if (field == null) {
                 field = ItemStack(Material.LIME_STAINED_GLASS_PANE)
                 val selectedItemMeta = field!!.itemMeta
-                selectedItemMeta!!.setDisplayName("§r§aSelected")
+                selectedItemMeta!!.displayName(Component.text("Selected", TextColor.color(0x55FF55)))
                 field!!.setItemMeta(selectedItemMeta)
             }
             return field

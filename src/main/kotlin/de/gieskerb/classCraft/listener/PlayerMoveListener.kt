@@ -13,12 +13,12 @@ class PlayerMoveListener : Listener {
         val player = event.player
         val playerClass: BaseClass = PlayerData.getPlayerData(player.name)?.activeClass as? ExplorerClass
             ?: return
-        if (event.from.x.toInt() != event.to!!.x.toInt() ||
-            event.from.z.toInt() != event.to!!.z.toInt()
+        if (event.from.x.toInt() != event.to.x.toInt() ||
+            event.from.z.toInt() != event.to.z.toInt()
         ) {
             player.sendMessage(
-                event.from.x.toInt().toString() + " " + event.from.y.toInt() + " -> " + event.to!!
-                    .z.toInt() + " " + event.to!!.z.toInt()
+                event.from.x.toInt().toString() + " " + event.from.y.toInt() + " -> " + event.to
+                    .z.toInt() + " " + event.to.z.toInt()
             )
             playerClass.addXp(1)
         }
