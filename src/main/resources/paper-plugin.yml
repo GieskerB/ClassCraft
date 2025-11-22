@@ -1,6 +1,6 @@
 name: ClassCraft
 version: '0.1-dev'
-main: de.gieskerb.classCraft.ClassCraft
+main: de.gieskerb.classCraft.Main
 api-version: '1.21'
 load: STARTUP
 authors: [ Bjarne Giesker ]

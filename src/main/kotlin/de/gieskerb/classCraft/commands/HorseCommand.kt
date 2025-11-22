@@ -4,12 +4,11 @@ import de.gieskerb.classCraft.Main
 import de.gieskerb.classCraft.data.DistanceTracker
 import de.gieskerb.classCraft.data.HorseData
 import de.gieskerb.classCraft.data.PlayerData
+import io.papermc.paper.command.brigadier.BasicCommand
+import io.papermc.paper.command.brigadier.CommandSourceStack
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.attribute.Attribute
-import org.bukkit.command.Command
-import org.bukkit.command.CommandExecutor
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Horse
 import org.bukkit.entity.Player
@@ -17,7 +16,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
 
-class HorseCommand : CommandExecutor {
+class HorseCommand : BasicCommand {
     private fun spawnHorse(player: Player): Horse {
         val horse = player.world.spawnEntity(player.location, EntityType.HORSE) as Horse
         val horseData: HorseData? = PlayerData.getPlayerData(player.name)?.horseData
@@ -56,16 +55,17 @@ class HorseCommand : CommandExecutor {
             
             """.trimIndent()
 
-    override fun onCommand(sender: CommandSender, command: Command, string: String, args: Array<String>): Boolean {
+    override fun execute(commandSourceStack: CommandSourceStack, args: Array<out String>) {
+        val sender = commandSourceStack.sender
         if (sender !is Player) {
             sender.sendMessage("You must be a player to use this command.")
-            return true
+            return
         }
 
-        val playerData = PlayerData.getPlayerData(sender.getName())
+        val playerData = PlayerData.getPlayerData(sender.name)
         if (playerData?.horseData == null) {
             sender.sendMessage("You dont have permission to use this command yet.")
-            return true
+            return
         }
 
         if (args.size == 1 && args[0] == "mount") {
@@ -87,8 +87,6 @@ class HorseCommand : CommandExecutor {
                 }
             }
         }
-
-        return true
     }
 
     companion object {
@@ -110,10 +108,10 @@ class HorseCommand : CommandExecutor {
 
         fun getCustomizeMenu(player: Player): Inventory? {
             if (customizeMenu == null) {
-                val INVENTORY_SIZE = 45
-                customizeMenu = Bukkit.createInventory(null, INVENTORY_SIZE, "Customize your Horse")
+                val invSize = 45
+                customizeMenu = Bukkit.createInventory(null, invSize, "Customize your Horse")
 
-                for (i in 0 until INVENTORY_SIZE) {
+                for (i in 0 until invSize) {
                     if (i % 9 == 0 || i % 9 == 8 || (i % 9 == 1 && i > 10) || (i % 9 == 7 && i > 16) || i / 9 == 2) {
                         customizeMenu!!.setItem(i, HandyItems.backGroundItem)
                     }

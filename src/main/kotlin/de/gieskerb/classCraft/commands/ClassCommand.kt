@@ -7,16 +7,15 @@ import de.gieskerb.classCraft.classes.LumberjackClass
 import de.gieskerb.classCraft.classes.MinerClass
 import de.gieskerb.classCraft.classes.WarriorClass
 import de.gieskerb.classCraft.data.PlayerData
+import io.papermc.paper.command.brigadier.BasicCommand
+import io.papermc.paper.command.brigadier.CommandSourceStack
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.command.Command
-import org.bukkit.command.CommandExecutor
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
-class ClassCommand : CommandExecutor {
+class ClassCommand : BasicCommand {
     private fun getHelpMessage(isOp: Boolean): String {
         var helpMessage = """
             §e§lClass Command Help
@@ -34,24 +33,25 @@ class ClassCommand : CommandExecutor {
         return helpMessage
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, string: String, args: Array<String>): Boolean {
+    override fun execute(commandSourceStack: CommandSourceStack, args: Array<out String>) {
+        val sender = commandSourceStack.sender
         if (sender !is Player) {
             sender.sendMessage("You must be a player to use this command.")
-            return true
+            return
         }
 
         if (args.isEmpty()) {
             sender.sendMessage("Missing arguments. Please use /class help to see more details!")
         } else if (args.size == 1) {
             when (args[0]) {
-                "help" -> sender.sendMessage(getHelpMessage(sender.isOp()))
+                "help" -> sender.sendMessage(getHelpMessage(sender.isOp))
                 "select" -> sender.openInventory(selectInventory!!)
                 "remove" -> {
-                    PlayerData.getPlayerData(sender.getName())!!.resetClass()
+                    PlayerData.getPlayerData(sender.name)!!.resetClass()
                     sender.sendMessage("You have removed your class.")
                 }
 
-                "level" -> if (PlayerData.getPlayerData(sender.getName())?.activeClass != null) {
+                "level" -> if (PlayerData.getPlayerData(sender.name)?.activeClass != null) {
                     sender.openInventory(getLevelMenu(sender)!!)
                 }
 
@@ -60,31 +60,31 @@ class ClassCommand : CommandExecutor {
         } else if (args.size == 2) {
             when (args[0]) {
                 "select" -> when (args[1]) {
-                    "Warrior", "warrior" -> PlayerData.getPlayerData(sender.getName())!!
+                    "Warrior", "warrior" -> PlayerData.getPlayerData(sender.name)!!
                         .changeClass(WarriorClass(sender))
 
-                    "Miner", "miner" -> PlayerData.getPlayerData(sender.getName())!!.changeClass(MinerClass(sender))
-                    "Lumberjack", "lumberjack" -> PlayerData.getPlayerData(sender.getName())!!
+                    "Miner", "miner" -> PlayerData.getPlayerData(sender.name)!!.changeClass(MinerClass(sender))
+                    "Lumberjack", "lumberjack" -> PlayerData.getPlayerData(sender.name)!!
                         .changeClass(LumberjackClass(sender))
 
-                    "Farmer", "farmer" -> PlayerData.getPlayerData(sender.getName())!!.changeClass(FarmerClass(sender))
-                    "Explorer", "explorer" -> PlayerData.getPlayerData(sender.getName())!!
+                    "Farmer", "farmer" -> PlayerData.getPlayerData(sender.name)!!.changeClass(FarmerClass(sender))
+                    "Explorer", "explorer" -> PlayerData.getPlayerData(sender.name)!!
                         .changeClass(ExplorerClass(sender))
 
                     else -> sender.sendMessage("Unknown class. Please use /class help to see more details")
                 }
 
                 "level" -> {
-                    if (!sender.isOp()) {
+                    if (!sender.isOp) {
                         sender.sendMessage("You dont have permission to use this command.")
 
                     } else {
                         try {
                             val level = args[1].toInt()
-                            if (level < 0 || level > 20) {
+                            if (level !in 0..20) {
                                 throw NumberFormatException()
                             }
-                            val activeClass: BaseClass? = PlayerData.getPlayerData(sender.getName())?.activeClass
+                            val activeClass: BaseClass? = PlayerData.getPlayerData(sender.name)?.activeClass
                             if (activeClass != null) {
                                 activeClass.level = level.toByte()
                             } else {
@@ -101,8 +101,6 @@ class ClassCommand : CommandExecutor {
         } else {
             sender.sendMessage("Too many arguments. Please use /class help to see more details!")
         }
-
-        return true
     }
 
     companion object {
@@ -112,10 +110,10 @@ class ClassCommand : CommandExecutor {
         val selectInventory: Inventory?
             get() {
                 if (selectMenu == null) {
-                    val INVENTORY_SIZE = 27
-                    selectMenu = Bukkit.createInventory(null, INVENTORY_SIZE, "Select your class")
+                    val invSize = 27
+                    selectMenu = Bukkit.createInventory(null, invSize, "Select your class")
 
-                    for (i in 0 until INVENTORY_SIZE) {
+                    for (i in 0 until invSize) {
                         if (i != 9 && i != 11 && i != 13 && i != 15 && i != 17) {
                             selectMenu!!.setItem(i, HandyItems.backGroundItem)
                         }
@@ -131,11 +129,11 @@ class ClassCommand : CommandExecutor {
             }
 
         fun getLevelMenu(player: Player): Inventory? {
-            val INVENTORY_SIZE = 45
+            val invSize = 45
             if (levelMenu == null) {
-                levelMenu = Bukkit.createInventory(null, INVENTORY_SIZE, "Level up your class")
+                levelMenu = Bukkit.createInventory(null, invSize, "Level up your class")
 
-                for (i in 0 until INVENTORY_SIZE) {
+                for (i in 0 until invSize) {
                     if (i <= 9 || i >= 35 || i % 9 == 0 || i % 9 == 8) {
                         levelMenu!!.setItem(i, HandyItems.backGroundItem)
                     }
@@ -147,9 +145,9 @@ class ClassCommand : CommandExecutor {
 
             var levelPaneIndex = 1
 
-            for (i in 0 until INVENTORY_SIZE) {
+            for (i in 0 until invSize) {
                 if (!(i <= 9 || i >= 35 || i % 9 == 0 || i % 9 == 8)) {
-                    if (i == INVENTORY_SIZE / 2) {
+                    if (i == invSize / 2) {
                         levelMenu!!.setItem(
                             i,
                             if (playerData.activeClass == null) null else playerData.activeClass!!.classItem
