@@ -1,0 +1,8 @@
+name: ClassCraft
+version: '0.1-dev'
+main: de.gieskerb.classCraft.ClassCraft
+api-version: '1.21'
+load: STARTUP
+authors: [ Bjarne Giesker ]
+description: ClassCraft is a Plugin that introduces 5 unique classes to the standard minecraft gameplay experience.
+website: github.com/GieskerB/ClassCraft
