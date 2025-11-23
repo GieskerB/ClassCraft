@@ -16,6 +16,7 @@ import de.gieskerb.classCraft.listener.RespawnListener
 import de.gieskerb.classCraft.listener.WorldSaveListener
 import de.gieskerb.classCraft.commands.ClassCommand
 import de.gieskerb.classCraft.commands.HorseCommand
+import de.gieskerb.classCraft.listener.ChunkLoadListener
 import org.bukkit.Bukkit
 import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
@@ -42,6 +43,7 @@ class Main : JavaPlugin() {
         val pluginManager: PluginManager = Bukkit.getPluginManager()
         pluginManager.registerEvents(BlockBreakListener(), this)
         pluginManager.registerEvents(BlockPlaceListener(), this)
+        pluginManager.registerEvents(ChunkLoadListener(), this)
         pluginManager.registerEvents(EntityBreedListener(), this)
         pluginManager.registerEvents(EntityDeathListener(), this)
         pluginManager.registerEvents(HarvestBlockListener(), this)

@@ -13,6 +13,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDeathEvent
+import org.bukkit.persistence.PersistentDataType
 
 class EntityDeathListener : Listener {
     @EventHandler
@@ -21,8 +22,11 @@ class EntityDeathListener : Listener {
             return
         }
 
-        if (event.entityType == EntityType.HORSE && event.entity.getMetadata(HorseCommand.METADATA_IDENTIFIER)
-                .isNotEmpty()
+        if (event.entityType == EntityType.HORSE && event.entity.persistentDataContainer.getOrDefault(
+                HorseCommand.identifierKey,
+                PersistentDataType.BOOLEAN,
+                false
+            )
         ) {
             event.droppedExp = 0
             event.drops.clear()
@@ -31,20 +35,20 @@ class EntityDeathListener : Listener {
 
         val player: Player = event.damageSource.causingEntity as Player
         val playerClass: BaseClass? = PlayerData.getPlayerData(player.name)?.activeClass
-            when (playerClass) {
-                is WarriorClass -> {
-                    if (warriorEntities!!.contains(EntityPair(event.entity.type))) {
-                        player.sendMessage("You have killed the right Entity!")
-                    }
+        when (playerClass) {
+            is WarriorClass -> {
+                if (warriorEntities!!.contains(EntityPair(event.entity.type))) {
+                    player.sendMessage("You have killed the right Entity!")
                 }
+            }
 
-                is FarmerClass -> {
-                    if (farmerEntities!!.contains(EntityPair(event.entity.type))) {
-                        player.sendMessage("You have killed the right Entity!")
-                    }
+            is FarmerClass -> {
+                if (farmerEntities!!.contains(EntityPair(event.entity.type))) {
+                    player.sendMessage("You have killed the right Entity!")
                 }
+            }
 
-                else -> {}
+            else -> {}
 
         }
     }

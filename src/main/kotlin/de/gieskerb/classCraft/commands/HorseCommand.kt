@@ -11,13 +11,14 @@ import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Horse
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
-import org.bukkit.metadata.FixedMetadataValue
+import org.bukkit.persistence.PersistentDataType
 
 class HorseCommand : BasicCommand {
     private fun spawnHorse(player: Player): Horse {
@@ -28,7 +29,8 @@ class HorseCommand : BasicCommand {
             horse.getAttribute(Attribute.MOVEMENT_SPEED)!!.baseValue = horseData.speed
             horse.getAttribute(Attribute.JUMP_STRENGTH)!!.baseValue = horseData.jump
             horse.setAdult()
-            horse.setMetadata(METADATA_IDENTIFIER, FixedMetadataValue(Main.plugin, true))
+            horse.persistentDataContainer.set(identifierKey, PersistentDataType.BOOLEAN, true)
+//            horse.setMetadata(METADATA_IDENTIFIER, FixedMetadataValue(Main.plugin, true))
             horse.ageLock = true
             horse.lootTable = null
             horse.color = horseData.color
@@ -93,7 +95,7 @@ class HorseCommand : BasicCommand {
     }
 
     companion object {
-        const val METADATA_IDENTIFIER: String = "CLASS_HORSE"
+        val identifierKey = NamespacedKey(Main.plugin,"CLASS_HORSE")
 
         val unlockMessage: String
             get() = "$6You have now unlocked your class specific horse! Use /horse for more details."
