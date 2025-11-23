@@ -2,6 +2,7 @@ package de.gieskerb.classCraft.listener
 
 import de.gieskerb.classCraft.Main
 import de.gieskerb.classCraft.data.PlayerData
+import kotlinx.serialization.json.Json
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
@@ -43,7 +44,7 @@ class PlayerQuitListener : Listener {
 //          "§eThe §6${playerData.activeClass!!.CLASS_NAME} §9$playerName§e left the game!"
             event.quitMessage(Component.text("The ", TextColor.color(0xFFFF55))
                 .append(Component.text(playerData.activeClass!!.className, TextColor.color(0xFFAA00)))
-                .append(Component.text(playerName, TextColor.color(0x5555FF)))
+                .append(Component.text(" $playerName", TextColor.color(0x5555FF)))
                 .append(Component.text(" left the game!", TextColor.color(0xFFFF55)))
             )
             if (playerData.getDistanceTracker() != null) {
@@ -73,7 +74,6 @@ class PlayerQuitListener : Listener {
             val playerFile = File(
                 Main.plugin.dataFolder.toString() + File.separator + "PlayerData" + File.separator + playerName + ".json"
             )
-            val playerData = PlayerData.getPlayerData(playerName)
             if (!playerFile.exists()) {
                 try {
                     if (!playerFile.createNewFile()) {
@@ -88,6 +88,7 @@ class PlayerQuitListener : Listener {
                 }
             }
 
+            val playerData: PlayerData? = PlayerData.getPlayerData(playerName)
             if (playerData == null && playerFile.exists()) {
                 if (!playerFile.delete()) {
                     Bukkit.getServer().broadcast(Component.text("Could not delete PlayerData File for Player $playerName",
@@ -96,10 +97,10 @@ class PlayerQuitListener : Listener {
             } else if (playerData != null) {
                 try {
                     FileWriter(playerFile).use { file ->
-                        file.write(PlayerData.getPlayerData(playerName)!!.toJSON().toString())
+                        file.write(Json.encodeToString(playerData))
                     }
                 } catch (e: IOException) {
-                    Bukkit.getServer().broadcast(Component.text("Could not delete PlayerData File for Player $playerName",
+                    Bukkit.getServer().broadcast(Component.text("Could not write PlayerData to File for Player $playerName",
                         TextColor.color(0xAA0000)))
                     println(e.message)
                 }

@@ -5,10 +5,6 @@ import de.gieskerb.classCraft.classes.BaseClass
 import de.gieskerb.classCraft.listener.HungerChangeListener
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.encodeToJsonElement
-import kotlinx.serialization.json.jsonObject
 import org.bukkit.Bukkit
 import org.bukkit.scheduler.BukkitTask
 
@@ -31,31 +27,6 @@ class PlayerData {
         this.activeClass = null
         this.horseData = null
         this.distanceTracker = null
-    }
-
-    constructor(json: JsonObject) {
-        this.assignedPlayer = json["player"].toString()
-        this.activeClass = Bukkit.getPlayer(assignedPlayer)?.let { BaseClass.fromJSON(json["class"] as JsonObject, it) }
-        this.horseData = HorseData.fromJSON(json["horse"] as JsonObject)
-    }
-
-    fun toJSON(): JsonObject {
-        val json = Json { prettyPrint = true }
-        val jsonObject: JsonObject = json.encodeToJsonElement(this).jsonObject
-        return jsonObject
-//        val json = JSONObject()
-//        json["player"] = assignedPlayer
-//        if (this.activeClass != null) {
-//            json["class"] = activeClass!!.toJSON()
-//        } else {
-//            json["class"] = JSONObject()
-//        }
-//        if (this.horseData != null) {
-//            json["horse"] = horseData!!.toJSON()
-//        } else {
-//            json["horse"] = JSONObject()
-//        }
-//        return json
     }
 
     fun getDistanceTracker(): DistanceTracker? {

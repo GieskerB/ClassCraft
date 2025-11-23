@@ -6,6 +6,7 @@ import de.gieskerb.classCraft.data.PlayerData
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlinx.serialization.json.*
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.io.File
@@ -36,19 +37,6 @@ sealed class BaseClass {
         this.className = name
         this.playerReference = player
         this.itemReceived = BooleanArray(4)
-    }
-
-    protected constructor(json: JsonObject, player: Player) {
-        this.className = json["class"].toString()
-        this.level = json["level"].toString().toByte()
-        this.xp = json["xp"].toString().toInt()
-        val jsonArray = json["rewardsClaimed"]!!.jsonArray
-        this.itemReceived = BooleanArray(jsonArray.size)
-
-        for (i in jsonArray.indices) {
-            this.itemReceived[i] = jsonArray[i].toString().toBoolean()
-        }
-        this.playerReference = player
     }
 
     private fun checkLevelUp() {
@@ -82,7 +70,6 @@ sealed class BaseClass {
             this.playerReference?.giveExp(this.level * 25)
         }
     }
-
 
     private fun checkItemReward() {
         if (this.level >= 1 && !itemReceived[0] && playerReference?.inventory?.firstEmpty() != -1) {
@@ -128,20 +115,8 @@ sealed class BaseClass {
         this.checkItemReward()
     }
 
-    fun toJSON() {
-        val jsonString: String = Json.encodeToString(this)
-        val jsonFile = File("PlayerData" + File.separator + playerReference?.name + ".json")
-        jsonFile.writeText(jsonString)
-//        val json = JSONObject()
-//        json["class"] = this.CLASS_NAME
-//        val rewards = JSONArray()
-//        for (i in itemReceived.indices) {
-//            rewards.add(i, itemReceived[i])
-//        }
-//        json["rewardsClaimed"] = rewards
-//        json["level"] = this.level
-//        json["xp"] = this.xp
-//        return json
+    fun addPlayerReference(playerName: String) {
+        this.playerReference = Bukkit.getPlayer(playerName)
     }
 
     companion object {
@@ -151,23 +126,6 @@ sealed class BaseClass {
             val maxLevelEXP = 1000
             val factor = (level + 1) * (level + 1) / 400.0
             return (factor * maxLevelEXP).toInt()
-        }
-
-        fun fromJSON(json: JsonObject, player: Player): BaseClass? {
-//            val jsonFile = File("PlayerData" + File.separator + player.name + ".json")
-//            if (!jsonFile.exists()) {
-//                return null
-//            }
-//            val json: JsonObject = Json.parseToJsonElement(jsonFile.readText()).jsonObject
-            val className = json["class"]?.jsonPrimitive?.contentOrNull ?: return null
-            return when (className) {
-                WarriorClass.CLASS_IDENTIFIER -> WarriorClass(json, player)
-                MinerClass.CLASS_IDENTIFIER -> MinerClass(json, player)
-                LumberjackClass.CLASS_IDENTIFIER -> LumberjackClass(json, player)
-                FarmerClass.CLASS_IDENTIFIER -> FarmerClass(json, player)
-                ExplorerClass.CLASS_IDENTIFIER -> ExplorerClass(json, player)
-                else -> null
-            }
         }
     }
 }

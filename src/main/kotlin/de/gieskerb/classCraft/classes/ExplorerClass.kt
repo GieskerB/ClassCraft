@@ -21,8 +21,6 @@ import org.bukkit.inventory.meta.BannerMeta
 class ExplorerClass : BaseClass {
     constructor(player: Player) : super(CLASS_IDENTIFIER, player)
 
-    constructor(json: JsonObject, player: Player) : super(json, player)
-
     override fun reapplyRewardEffects() {
     }
 
@@ -47,14 +45,14 @@ class ExplorerClass : BaseClass {
         val item = ItemStack(Material.CHAINMAIL_BOOTS)
         item.addEnchantment(Enchantment.PROTECTION, 2)
         item.addEnchantment(Enchantment.UNBREAKING, 2)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveSecondToolReward() {
         val item = ItemStack(Material.IRON_BOOTS)
         item.addEnchantment(Enchantment.PROTECTION, 4)
         item.addEnchantment(Enchantment.UNBREAKING, 3)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveThirdToolReward() {
@@ -62,7 +60,7 @@ class ExplorerClass : BaseClass {
         item.addEnchantment(Enchantment.PROTECTION, 5)
         item.addEnchantment(Enchantment.FORTUNE, 5)
         item.addEnchantment(Enchantment.UNBREAKING, 10)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveBannerReward() {
@@ -83,11 +81,12 @@ class ExplorerClass : BaseClass {
         m.patterns = patterns
 
         item.setItemMeta(m)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     companion object {
         const val CLASS_IDENTIFIER: String = "Explorer"
+
         var displayItem: ItemStack = ItemStack(Material.NETHERITE_BOOTS)
             get() {
                 if (!field.itemMeta.itemName().toString().startsWith(CLASS_IDENTIFIER)) {

@@ -30,8 +30,6 @@ import org.bukkit.inventory.meta.BannerMeta
 class FarmerClass : BaseClass {
     constructor(player: Player) : super(CLASS_IDENTIFIER, player)
 
-    constructor(json: JsonObject, player: Player) : super(json, player)
-
     override fun reapplyRewardEffects() {
     }
 
@@ -56,7 +54,7 @@ class FarmerClass : BaseClass {
         val item = ItemStack(Material.IRON_HOE)
         item.addEnchantment(Enchantment.EFFICIENCY, 2)
         item.addEnchantment(Enchantment.UNBREAKING, 2)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveSecondToolReward() {
@@ -64,7 +62,7 @@ class FarmerClass : BaseClass {
         item.addUnsafeEnchantment(Enchantment.EFFICIENCY, 5)
         item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1)
         item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveThirdToolReward() {
@@ -72,7 +70,7 @@ class FarmerClass : BaseClass {
         item.addEnchantment(Enchantment.EFFICIENCY, 5)
         item.addEnchantment(Enchantment.FORTUNE, 5)
         item.addEnchantment(Enchantment.UNBREAKING, 10)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveBannerReward() {
@@ -90,7 +88,7 @@ class FarmerClass : BaseClass {
         m.patterns = patterns
 
         item.setItemMeta(m)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     companion object {

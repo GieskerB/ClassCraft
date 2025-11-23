@@ -25,23 +25,20 @@ import java.util.*
 class MinerClass : BaseClass {
     constructor(player: Player) : super(CLASS_IDENTIFIER, player)
 
-    constructor(json: JsonObject, player: Player) : super(json, player)
-
     override fun reapplyRewardEffects() {
         if (super.level >= 17) {
-            super.playerReference?.addPotionEffect(PotionEffect(PotionEffectType.HASTE, -1, 1, false, false))
+            super.playerReference!!.addPotionEffect(PotionEffect(PotionEffectType.HASTE, -1, 1, false, false))
         } else if (super.level >= 5) {
-            super.playerReference?.addPotionEffect(PotionEffect(PotionEffectType.HASTE, -1, 0, false, false))
+            super.playerReference!!.addPotionEffect(PotionEffect(PotionEffectType.HASTE, -1, 0, false, false))
         }
         if (super.level >= 15) {
-            super.playerReference?.getAttribute(Attribute.MAX_HEALTH)?.baseValue =
-                15.0
+            super.playerReference!!.getAttribute(Attribute.MAX_HEALTH)?.baseValue = 15.0
         }
     }
 
     override fun removePermanentEffects() {
-        super.playerReference?.removePotionEffect(PotionEffectType.HASTE)
-        Objects.requireNonNull(super.playerReference?.getAttribute(Attribute.MAX_HEALTH))?.baseValue =
+        super.playerReference!!.removePotionEffect(PotionEffectType.HASTE)
+        Objects.requireNonNull(super.playerReference!!.getAttribute(Attribute.MAX_HEALTH))?.baseValue =
             20.0
     }
 
@@ -63,7 +60,7 @@ class MinerClass : BaseClass {
         val item = ItemStack(Material.STONE_PICKAXE)
         item.addEnchantment(Enchantment.EFFICIENCY, 2)
         item.addEnchantment(Enchantment.UNBREAKING, 2)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveSecondToolReward() {
@@ -71,7 +68,7 @@ class MinerClass : BaseClass {
         item.addEnchantment(Enchantment.EFFICIENCY, 5)
         item.addEnchantment(Enchantment.UNBREAKING, 3)
         item.addEnchantment(Enchantment.FORTUNE, 3)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveThirdToolReward() {
@@ -79,7 +76,7 @@ class MinerClass : BaseClass {
         item.addUnsafeEnchantment(Enchantment.EFFICIENCY, 5)
         item.addUnsafeEnchantment(Enchantment.FORTUNE, 5)
         item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveBannerReward() {
@@ -97,7 +94,7 @@ class MinerClass : BaseClass {
         m.patterns = patterns
 
         item.setItemMeta(m)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     companion object {

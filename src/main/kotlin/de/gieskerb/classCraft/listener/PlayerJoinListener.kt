@@ -2,6 +2,7 @@ package de.gieskerb.classCraft.listener
 
 import de.gieskerb.classCraft.Main
 import de.gieskerb.classCraft.data.PlayerData
+import kotlinx.serialization.json.Json
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
@@ -76,30 +77,21 @@ class PlayerJoinListener : Listener {
 
         fun loadPlayerData(playerName: String): PlayerData {
             val playerFile = File(
-                Main.plugin.dataFolder.absolutePath + File.separator + "PlayerData" + File.separator +
-                        playerName + ".json"
+                Main.plugin.dataFolder.toString() + File.separator + "PlayerData" + File.separator + playerName + ".json"
             )
 
             var playerData: PlayerData
-            if (playerFile.exists()) {
-                // TODO
-//                val parser = JSONParser()
-//                try {
-//                    val json: JSONObject = parser.parse(FileReader(playerFile)) as JSONObject
-//                    playerData = PlayerData(json)
-//                } catch (e: IOException) {
-//                    Bukkit.getServer().broadcastMessage(
-//                        "§4Could not load PlayerData for Player " + playerName + " due to " + e.javaClass.simpleName
-//                    )
-//                    playerData = PlayerData(playerName)
-//                } catch (e: ParseException) {
-//                    Bukkit.getServer().broadcastMessage(
-//                        "§4Could not load PlayerData for Player " + playerName + " due to " + e.javaClass.getSimpleName()
-//                    )
+            if (!playerFile.exists()) {
+                Bukkit.getServer().broadcast(
+                    Component.text(
+                        "Could not load PlayerData File for Player $playerName",
+                        TextColor.color(0xAA0000)
+                    )
+                )
                 playerData = PlayerData(playerName)
-//                }
             } else {
-                playerData = PlayerData(playerName)
+                playerData = Json.decodeFromString<PlayerData>(playerFile.readText())
+                playerData.activeClass?.addPlayerReference(playerName)
             }
 
             PlayerData.addPlayerData(playerData)

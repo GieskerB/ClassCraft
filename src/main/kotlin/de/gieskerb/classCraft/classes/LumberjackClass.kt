@@ -23,22 +23,20 @@ import org.bukkit.potion.PotionEffectType
 class LumberjackClass : BaseClass {
     constructor(player: Player) : super(CLASS_IDENTIFIER, player)
 
-    constructor(json: JsonObject, player: Player) : super(json, player)
-
     override fun reapplyRewardEffects() {
         if (super.level >= 17) {
-            super.playerReference?.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 1, false, false))
+            super.playerReference!!.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 1, false, false))
         } else if (super.level >= 5) {
-            super.playerReference?.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 0, false, false))
+            super.playerReference!!.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, -1, 0, false, false))
         }
         if (super.level >= 15) {
-            super.playerReference?.addPotionEffect(PotionEffect(PotionEffectType.SLOWNESS, -1, 0, false, false))
+            super.playerReference!!.addPotionEffect(PotionEffect(PotionEffectType.SLOWNESS, -1, 0, false, false))
         }
     }
 
     override fun removePermanentEffects() {
-        super.playerReference?.removePotionEffect(PotionEffectType.RESISTANCE)
-        super.playerReference?.removePotionEffect(PotionEffectType.SLOWNESS)
+        super.playerReference!!.removePotionEffect(PotionEffectType.RESISTANCE)
+        super.playerReference!!.removePotionEffect(PotionEffectType.SLOWNESS)
     }
 
     override val classItem: ItemStack
@@ -74,14 +72,14 @@ class LumberjackClass : BaseClass {
         m.patterns = patterns
 
         item.setItemMeta(m)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveFirstToolReward() {
         val item = ItemStack(Material.STONE_AXE)
         item.addEnchantment(Enchantment.EFFICIENCY, 2)
         item.addEnchantment(Enchantment.UNBREAKING, 2)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveSecondToolReward() {
@@ -89,7 +87,7 @@ class LumberjackClass : BaseClass {
         item.addEnchantment(Enchantment.EFFICIENCY, 5)
         item.addEnchantment(Enchantment.UNBREAKING, 3)
         item.addEnchantment(Enchantment.FORTUNE, 3)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     override fun giveThirdToolReward() {
@@ -97,7 +95,7 @@ class LumberjackClass : BaseClass {
         item.addUnsafeEnchantment(Enchantment.EFFICIENCY, 5)
         item.addUnsafeEnchantment(Enchantment.FORTUNE, 5)
         item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
-        super.playerReference?.inventory?.addItem(item)
+        super.playerReference!!.inventory.addItem(item)
     }
 
     companion object {
