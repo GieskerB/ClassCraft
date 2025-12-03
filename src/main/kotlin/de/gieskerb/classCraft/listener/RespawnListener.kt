@@ -13,7 +13,7 @@ class RespawnListener : Listener {
         val playerData = PlayerData.getPlayerData(event.player.name)
         object : BukkitRunnable() {
             override fun run() {
-                playerData?.activeClass?.reapplyRewardEffects()
+//                playerData?.activeClass?.reapplyRewardEffects()
             }
         }.runTaskLater(Main.plugin, 5L)
     }

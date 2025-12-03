@@ -57,7 +57,6 @@ class PlayerJoinListener : Listener {
                     .append(Component.text(" $playerName", TextColor.color(0x5555FF)))
                     .append(Component.text(" joined the game!", TextColor.color(0xFFFF55)))
             )
-            playerClass.reapplyRewardEffects()
         } else {
             // "§9$playerName§e joined the game!"
             event.joinMessage(

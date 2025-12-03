@@ -1,6 +1,6 @@
 package de.gieskerb.classCraft.listener
 
-import de.gieskerb.classCraft.classes.ExplorerClass
+import de.gieskerb.classCraft.classes.HunterClass
 import de.gieskerb.classCraft.classes.FarmerClass
 import de.gieskerb.classCraft.classes.LumberjackClass
 import de.gieskerb.classCraft.classes.MinerClass
@@ -38,8 +38,8 @@ class InventoryClickListener : Listener {
                 FarmerClass.displayItem -> {
                     FarmerClass(event.whoClicked as Player)
                 }
-                ExplorerClass.displayItem -> {
-                    ExplorerClass(event.whoClicked as Player)
+                HunterClass.displayItem -> {
+                    HunterClass(event.whoClicked as Player)
                 }
                 else -> {
                     return

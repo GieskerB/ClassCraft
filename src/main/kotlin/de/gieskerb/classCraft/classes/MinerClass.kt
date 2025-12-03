@@ -1,5 +1,6 @@
 package de.gieskerb.classCraft.classes
 
+import de.gieskerb.classCraft.classes.WarriorClass.Companion.CLASS_ID
 import de.gieskerb.classCraft.data.HorseData
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
@@ -17,6 +18,8 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.BannerMeta
+import org.bukkit.inventory.meta.ItemMeta
+import org.bukkit.persistence.PersistentDataType
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.*
@@ -24,23 +27,6 @@ import java.util.*
 @Serializable
 class MinerClass : BaseClass {
     constructor(player: Player) : super(CLASS_IDENTIFIER, player)
-
-    override fun reapplyRewardEffects() {
-        if (super.level >= 17) {
-            super.playerReference!!.addPotionEffect(PotionEffect(PotionEffectType.HASTE, -1, 1, false, false))
-        } else if (super.level >= 5) {
-            super.playerReference!!.addPotionEffect(PotionEffect(PotionEffectType.HASTE, -1, 0, false, false))
-        }
-        if (super.level >= 15) {
-            super.playerReference!!.getAttribute(Attribute.MAX_HEALTH)?.baseValue = 15.0
-        }
-    }
-
-    override fun removePermanentEffects() {
-        super.playerReference!!.removePotionEffect(PotionEffectType.HASTE)
-        Objects.requireNonNull(super.playerReference!!.getAttribute(Attribute.MAX_HEALTH))?.baseValue =
-            20.0
-    }
 
     override val classItem: ItemStack
         get() = displayItem
@@ -56,32 +42,40 @@ class MinerClass : BaseClass {
             Material.DIAMOND_HORSE_ARMOR
         )
 
-    override fun giveFirstToolReward() {
+        override fun classWeapon(): Queue<ItemStack> {
         val item = ItemStack(Material.STONE_PICKAXE)
-        item.addEnchantment(Enchantment.EFFICIENCY, 2)
-        item.addEnchantment(Enchantment.UNBREAKING, 2)
-        super.playerReference!!.inventory.addItem(item)
+        val meta: ItemMeta = item.itemMeta!!
+
+        meta.itemName(
+            Component.text(
+                "Mighty Miner Pickaxe",
+                TextColor.color(0xAA0000)
+            )
+        )
+        val loreList: MutableList<Component> = ArrayList()
+        loreList.add(Component.text("This is a lore line!", TextColor.color(0x00AA00)))
+        loreList.add(Component.text("And this is a lore line, too!", TextColor.color(0x00AA00)))
+        meta.lore(loreList)
+        meta.isUnbreakable = true
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
+        item.setItemMeta(meta)
+        item.editPersistentDataContainer { pdc ->
+            pdc.set(
+                classWeaponIdentifierKey,
+                PersistentDataType.BYTE,
+                ((CLASS_ID shl 4 or this.level.toInt()).toByte())
+            )
+        }
+        item.setItemMeta(meta)
+        val queue = LinkedList<ItemStack>()
+        queue.add(item)
+        return queue
     }
 
-    override fun giveSecondToolReward() {
-        val item = ItemStack(Material.IRON_PICKAXE)
-        item.addEnchantment(Enchantment.EFFICIENCY, 5)
-        item.addEnchantment(Enchantment.UNBREAKING, 3)
-        item.addEnchantment(Enchantment.FORTUNE, 3)
-        super.playerReference!!.inventory.addItem(item)
-    }
-
-    override fun giveThirdToolReward() {
-        val item = ItemStack(Material.NETHERITE_PICKAXE)
-        item.addUnsafeEnchantment(Enchantment.EFFICIENCY, 5)
-        item.addUnsafeEnchantment(Enchantment.FORTUNE, 5)
-        item.addUnsafeEnchantment(Enchantment.UNBREAKING, 10)
-        super.playerReference!!.inventory.addItem(item)
-    }
-
-    override fun giveBannerReward() {
+    override fun classBanner(): Queue<ItemStack> {
         val item = ItemStack(Material.WHITE_BANNER)
-        val m = item.itemMeta as BannerMeta
+        val meta = item.itemMeta as BannerMeta
 
         val patterns: MutableList<Pattern> = ArrayList()
         patterns.add(Pattern(DyeColor.GRAY, PatternType.CROSS))
@@ -91,10 +85,17 @@ class MinerClass : BaseClass {
         patterns.add(Pattern(DyeColor.GRAY, PatternType.HALF_HORIZONTAL))
         patterns.add(Pattern(DyeColor.GRAY, PatternType.BORDER))
 
-        m.patterns = patterns
+        meta.patterns = patterns
 
-        item.setItemMeta(m)
-        super.playerReference!!.inventory.addItem(item)
+        item.setItemMeta(meta)
+        val queue = LinkedList<ItemStack>()
+        queue.add(item)
+        return queue
+    }
+
+    override fun classArmorSet(): Queue<ItemStack> {
+        // TODO("Not yet implemented")
+        return LinkedList<ItemStack>()
     }
 
     companion object {

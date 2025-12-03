@@ -1,7 +1,7 @@
 package de.gieskerb.classCraft.commands
 
 import de.gieskerb.classCraft.classes.BaseClass
-import de.gieskerb.classCraft.classes.ExplorerClass
+import de.gieskerb.classCraft.classes.HunterClass
 import de.gieskerb.classCraft.classes.FarmerClass
 import de.gieskerb.classCraft.classes.LumberjackClass
 import de.gieskerb.classCraft.classes.MinerClass
@@ -70,7 +70,7 @@ class ClassCommand : BasicCommand {
 
                     "Farmer", "farmer" -> PlayerData.getPlayerData(sender.name)!!.changeClass(FarmerClass(sender))
                     "Explorer", "explorer" -> PlayerData.getPlayerData(sender.name)!!
-                        .changeClass(ExplorerClass(sender))
+                        .changeClass(HunterClass(sender))
 
                     else -> sender.sendMessage("Unknown class. Please use /class help to see more details")
                 }
@@ -124,7 +124,7 @@ class ClassCommand : BasicCommand {
                     selectMenu!!.setItem(11, MinerClass.displayItem)
                     selectMenu!!.setItem(13, LumberjackClass.displayItem)
                     selectMenu!!.setItem(15, FarmerClass.displayItem)
-                    selectMenu!!.setItem(17, ExplorerClass.displayItem)
+                    selectMenu!!.setItem(17, HunterClass.displayItem)
                 }
                 return selectMenu
             }

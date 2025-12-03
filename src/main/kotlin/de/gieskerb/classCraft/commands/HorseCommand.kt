@@ -30,7 +30,6 @@ class HorseCommand : BasicCommand {
             horse.getAttribute(Attribute.JUMP_STRENGTH)!!.baseValue = horseData.jump
             horse.setAdult()
             horse.persistentDataContainer.set(identifierKey, PersistentDataType.BOOLEAN, true)
-//            horse.setMetadata(METADATA_IDENTIFIER, FixedMetadataValue(Main.plugin, true))
             horse.ageLock = true
             horse.lootTable = null
             horse.color = horseData.color

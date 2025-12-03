@@ -1,7 +1,7 @@
 package de.gieskerb.classCraft.listener
 
 import de.gieskerb.classCraft.classes.BaseClass
-import de.gieskerb.classCraft.classes.ExplorerClass
+import de.gieskerb.classCraft.classes.HunterClass
 import de.gieskerb.classCraft.data.PlayerData
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -11,7 +11,7 @@ class PlayerMoveListener : Listener {
     @EventHandler
     fun onStatisticIncrementEvent(event: PlayerMoveEvent) {
         val player = event.player
-        val playerClass: BaseClass = PlayerData.getPlayerData(player.name)?.activeClass as? ExplorerClass
+        val playerClass: BaseClass = PlayerData.getPlayerData(player.name)?.activeClass as? HunterClass
             ?: return
         if (event.from.x.toInt() != event.to.x.toInt() ||
             event.from.z.toInt() != event.to.z.toInt()

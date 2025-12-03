@@ -62,7 +62,6 @@ class PlayerData {
     }
 
     fun resetClass() {
-        activeClass?.removePermanentEffects()
         HungerChangeListener.removePlayer(assignedPlayer)
         this.activeClass = null
         this.horseData = null
